@@ -1,3 +1,18 @@
+# Yoga Studio
+
+A full-stack yoga studio booking platform built with
+Next.js, TypeScript, Prisma, PostgreSQL, Auth.js,
+Stripe, and Tailwind CSS.
+
+Features
+
+- User authentication
+- Book classes
+- Purchase memberships
+- Dashboard
+- Admin portal
+- Stripe payments
+
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started
