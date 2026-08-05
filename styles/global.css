@@ -1,0 +1,35 @@
+@theme {
+  /* Brand */
+  --color-primary: ;
+  --color-secondary: ;
+  --color-accent: ;
+
+  /* Surfaces */
+  --color-background: ;
+  --color-surface: ;
+  --color-border: ;
+
+  /* Text */
+  --color-text: ;
+  --color-text-muted: ;
+
+  /* Status */
+  --color-success: ;
+  --color-warning: ;
+  --color-danger: ;
+
+  /* Typography */
+  --font-display: ;
+  --font-body: ;
+
+  /* Radius */
+  --radius-sm: 0.25rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-xl: 1rem;
+
+  /* Shadows */
+  --shadow-sm: ;
+  --shadow-md: ;
+  --shadow-lg: ;
+}
