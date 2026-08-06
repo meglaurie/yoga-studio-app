@@ -1,10 +1,25 @@
-type ButtonProps = {
-  children: React.ReactNode;
-};
+type Variant = "primary" | "secondary" | "outline" | "ghost" | "link";
 
-export function Button({ children }: ButtonProps) {
+interface ButtonProps
+  extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  variant?: Variant;
+}
+
+export function Button({
+  variant = "primary",
+  className,
+  children,
+  ...props
+}: ButtonProps) {
   return (
-    <button>
+    <button
+      className={clsx(
+        styles.button,
+        styles[variant],
+        className
+      )}
+      {...props}
+    >
       {children}
     </button>
   );

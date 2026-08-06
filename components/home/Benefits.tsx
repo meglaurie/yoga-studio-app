@@ -1,7 +1,24 @@
+import FeatureSplit from "@/components/layout/FeatureSplit";
+
+
 export default function Benefits() { 
     return ( 
         <section className="flex flex-col items-center justify-center gap-8 py-16">
-            <h2 className="text-3xl font-bold text-center text-zinc-900 dark:text-zinc-100">
+           <FeatureSplit
+
+            image={'/schedule.jpg'}
+
+            title="Benefits of Practicing Yoga"
+
+            description="Regular yoga practice helps increase flexibility and range of motion."
+
+            buttonText="View"
+
+            reverse={false}
+
+            />
+           
+            {/* <h2 className="text-3xl font-bold text-center text-zinc-900 dark:text-zinc-100">
                 Benefits of Practicing Yoga
             </h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
@@ -23,7 +40,7 @@ export default function Benefits() {
                         Practicing yoga can improve posture and alignment, reducing back pain.
                     </p>
                 </div>
-            </div>
+            </div> */}
         </section>
     );
 }
