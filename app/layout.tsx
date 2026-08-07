@@ -8,7 +8,7 @@ import Footer from '@/components/layout/Footer';
 const lato = Lato({
   subsets: ['latin'],
   variable: '--font-body',
-  weight: '100'
+  weight: ['400', '700'],
 });
 
 const artifika = Artifika({
@@ -32,7 +32,7 @@ export default function RootLayout({
       <body className={`${lato.variable} ${artifika.variable}`}>
         <Navbar />
 
-        <main>{children}</main>
+        <main className="site-main">{children}</main>
 
         <Footer />
       </body>
