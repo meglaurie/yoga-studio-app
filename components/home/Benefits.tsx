@@ -4,7 +4,7 @@ export default function Benefits() {
   return (
     <section className="flex flex-col items-center justify-center gap-8 py-16">
       <FeatureSplit
-        image={'/imgs/yogaHeroImg.jpg'}
+        image={'/imgs/dylan-gillis-YJdCZba0TYE-unsplash 1.png'}
 
         title="Benefits of Practicing Yoga"
 

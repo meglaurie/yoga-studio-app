@@ -1,6 +1,6 @@
 export default function PricingPreview() {
   return (
-    <div className="flex h-screen w-full flex-col items-center justify-center bg-gradient-to-b from-green-400 to-blue-500 text-white">
+    <div className="flex h-screen w-full flex-col items-center justify-center text-white bg-olive-500">
       <h2 className="mb-4 text-4xl font-bold">Simple, Transparent Pricing</h2>
       <p className="mb-8 text-xl">Choose the plan that works best for you.</p>
       <div className="flex flex-col gap-8 md:flex-row">
