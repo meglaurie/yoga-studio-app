@@ -1,0 +1,37 @@
+.feature-split {
+  display: grid;
+
+  grid-template-columns: 1fr 1fr;
+
+  gap: 4rem;
+
+  align-items: center;
+}
+
+.feature-split--reverse {
+  direction: rtl;
+}
+
+.feature-split--reverse > * {
+  direction: ltr;
+}
+
+.feature-split__image img {
+  width: 100%;
+
+  display: block;
+}
+
+.feature-split__content {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 1.5rem;
+}
+
+@media (max-width: 768px) {
+  .feature-split {
+    grid-template-columns: 1fr;
+  }
+}

@@ -1,0 +1,7 @@
+.footer {
+  background: var(--color-secondary);
+
+  color: white;
+
+  padding-block: 3rem;
+}

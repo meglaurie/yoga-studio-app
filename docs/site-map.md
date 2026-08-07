@@ -8,12 +8,12 @@
 ├── Register
 │
 ├── Dashboard
-│     ├── Upcoming Classes
-│     ├── Purchase History
-│     ├── Profile
+│ ├── Upcoming Classes
+│ ├── Purchase History
+│ ├── Profile
 │
 └── Admin
-      ├── Dashboard
-      ├── Classes
-      ├── Members
-      └── Payments
+├── Dashboard
+├── Classes
+├── Members
+└── Payments

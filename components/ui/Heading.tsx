@@ -1,30 +1,19 @@
-import clsx from "clsx";
+interface HeadingProps {
+  children: React.ReactNode;
 
-type HeadingLevel = "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
+  as?: 'h1' | 'h2' | 'h3';
 
-interface HeadingProps
-  extends React.HTMLAttributes<HTMLHeadingElement> {
-  as?: HeadingLevel;
-  variant?: HeadingLevel;
+  size?: 'display' | 'h1' | 'h2' | 'h3';
 }
 
 export function Heading({
-  as: Component = "h2",
-  variant,
-  className,
   children,
-  ...props
+
+  as = 'h2',
+
+  size = 'h2',
 }: HeadingProps) {
-  return (
-    <Component
-      className={clsx(
-        "heading",
-        `heading--${variant ?? Component}`,
-        className
-      )}
-      {...props}
-    >
-      {children}
-    </Component>
-  );
+  const Component = as;
+
+  return <Component className={`heading heading--${size}`}>{children}</Component>;
 }

@@ -17,7 +17,6 @@ Contact
 Login
 Create Account
 
-
 Member Features
 
 Dashboard
@@ -27,7 +26,7 @@ View purchases
 View membership
 Edit profile
 
-Member Nav 
+Member Nav
 Logo
 Schedule
 Dashboard

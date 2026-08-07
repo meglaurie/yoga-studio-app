@@ -1,0 +1,17 @@
+.stack {
+  display: flex;
+
+  flex-direction: column;
+}
+
+.stack--sm {
+  gap: 1rem;
+}
+
+.stack--md {
+  gap: 2rem;
+}
+
+.stack--lg {
+  gap: 4rem;
+}

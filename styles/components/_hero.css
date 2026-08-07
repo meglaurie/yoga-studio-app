@@ -1,0 +1,43 @@
+.hero {
+  position: relative;
+
+  min-height: 100vh;
+
+  display: flex;
+
+  align-items: center;
+
+  overflow: hidden;
+
+  color: white;
+
+  text-align: center;
+}
+
+.hero__background {
+  position: absolute;
+
+  inset: 0;
+
+  background-size: cover;
+
+  background-position: center;
+}
+
+.hero__overlay {
+  position: absolute;
+
+  inset: 0;
+
+  background: var(--color-overlay);
+}
+
+.hero__content {
+  position: relative;
+
+  z-index: 2;
+
+  max-width: 48rem;
+
+  margin: auto;
+}

@@ -1,6 +1,4 @@
-import clsx from "clsx";
-// import "./FeatureSplit.css";
-import '../styles/global.css';
+import clsx from 'clsx';
 
 interface FeatureSplitProps {
   image: string;
@@ -21,8 +19,8 @@ export default function FeatureSplit({
 }: FeatureSplitProps) {
   return (
     <section
-      className={clsx("feature-split", {
-        "feature-split--reverse": reverse,
+      className={clsx('feature-split', {
+        'feature-split--reverse': reverse,
       })}
     >
       <div className="feature-split__image">
@@ -33,9 +31,7 @@ export default function FeatureSplit({
         <h2>{title}</h2>
         <p>{description}</p>
 
-        {buttonText && (
-          <button>{buttonText}</button>
-        )}
+        {buttonText && <button>{buttonText}</button>}
       </div>
     </section>
   );

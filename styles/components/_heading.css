@@ -1,0 +1,21 @@
+.heading {
+  margin: 0;
+
+  font-weight: 700;
+}
+
+.heading--display {
+  font-size: clamp(3rem, 5vw, 5rem);
+}
+
+.heading--h1 {
+  font-size: 3rem;
+}
+
+.heading--h2 {
+  font-size: 2.5rem;
+}
+
+.heading--h3 {
+  font-size: 2rem;
+}
