@@ -1,0 +1,31 @@
+.text {
+  margin: 0;
+
+  font-family: var(--font-body);
+
+  color: var(--color-text-dark);
+}
+
+
+.text--body {
+  font-size: 1rem;
+
+  line-height: 1.6;
+}
+
+
+.text--lead {
+  font-size: 1.25rem;
+
+  line-height: 1.7;
+}
+
+
+.text--muted {
+  color: var(--color-text-muted);
+}
+
+
+.text--small {
+  font-size: 0.875rem;
+}
