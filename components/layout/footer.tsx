@@ -1,7 +1,8 @@
 import Link from 'next/link';
-import { navigation } from '@/components/data/navigation';
 import Container from '@/components/layout/Container';
+import Logo from '@/components/ui/Logo';
 import { Heading } from '@/components/ui/Heading';
+import { navigation } from '@/components/data/navigation';
 
 import {
   FaFacebookF,
@@ -14,6 +15,12 @@ export default function Footer() {
     <footer className="footer">
       <Container>
         <div className="footer__content">
+          <Logo
+            src="/imgs/mandala-svgrepo-com 1.png"
+            alt="Stillwater Yoga Studio Logo"
+            width={100}
+            height={100}
+          />
           <Heading as="h2" size="h3" className="footer__brand">
             Stillwater Yoga Studio
           </Heading>

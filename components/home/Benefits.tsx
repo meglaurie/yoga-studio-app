@@ -1,8 +1,9 @@
 import FeatureSplit from '@/components/layout/FeatureSplit';
+import Section from '../ui/Section';
 
 export default function Benefits() {
   return (
-    <section className="flex flex-col items-center justify-center gap-8 py-16">
+    <Section className="benefits">
       <FeatureSplit
         image={'/imgs/dylan-gillis-YJdCZba0TYE-unsplash 1.png'}
 
@@ -14,6 +15,6 @@ export default function Benefits() {
 
         reverse={false}
       />
-    </section>
+    </Section>
   );
 }

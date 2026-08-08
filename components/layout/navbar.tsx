@@ -2,11 +2,18 @@
 
 import Link from "next/link";
 import MobileMenu from "./MobileMenu";
+import Logo from "@/components/ui/Logo";
 import { navigation } from "@/components/data/navigation";
 
 export default function Navbar() {
   return (
     <nav className="navbar__container">
+      <Logo
+        src="/imgs/mandala-svgrepo-com 1.png"
+        alt="Stillwater Yoga Studio Logo"
+        width={50}
+        height={50}
+      />
       <Link href="/" className="navbar__logo">
         Stillwater Yoga
       </Link>

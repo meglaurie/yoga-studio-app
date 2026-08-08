@@ -1,0 +1,58 @@
+.pricing-preview {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  background: #718238;
+  color: white;
+}
+
+.pricing-preview__header {
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.pricing-preview__plans {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  width: 100%;
+}
+
+.pricing-card {
+  flex: 1;
+}
+
+.pricing-card--basic {
+  color: #3b82f6;
+}
+
+.pricing-card--premium {
+  color: #a855f7;
+}
+
+.pricing-card__price {
+  margin: 0.5rem 0 1rem;
+  font-size: 1.875rem;
+  font-weight: 700;
+}
+
+.pricing-card__price span {
+  font-size: 1rem;
+  font-weight: 400;
+}
+
+.pricing-card__features {
+  margin-bottom: 1rem;
+  padding-left: 1.25rem;
+  list-style: disc;
+}
+
+@media (min-width: 768px) {
+  .pricing-preview__plans {
+    flex-direction: row;
+  }
+}
+

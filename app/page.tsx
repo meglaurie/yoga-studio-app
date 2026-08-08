@@ -5,6 +5,7 @@ import Benefits from '@/components/home/Benefits';
 import FeaturedClasses from '@/components/home/FeaturedClasses';
 import PricingPreview from '@/components/home/PricingPreview';
 import CTA from '@/components/home/CTA';
+import Schedule from '@/components/home/Schedule';
 
 export default function Home() {
   return (
@@ -20,6 +21,8 @@ export default function Home() {
       <Benefits />
 
       <FeaturedClasses />
+
+      <Schedule />
 
       <PricingPreview />
 

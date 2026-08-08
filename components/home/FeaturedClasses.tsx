@@ -1,8 +1,9 @@
 import FeatureSplit from "../layout/FeatureSplit";
+import Section from "../ui/Section";
 
 export default function FeaturedClasses() {
   return (
-    <section className="w-full bg-zinc-50 py-16 dark:bg-black">
+    <Section className="featured-classes">
       <FeatureSplit
           image={'/imgs/jaspinder-singh-Deqn8q739DA-unsplash 1.png'}
           title="Featured Classes"
@@ -13,7 +14,6 @@ export default function FeaturedClasses() {
       <div className="mt-10 grid grid-cols-1 gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
         {/* Class cards will go here */}
       </div>
-   
-    </section>
+    </Section>
   );
 }

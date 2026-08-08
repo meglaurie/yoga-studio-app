@@ -1,4 +1,3 @@
 .section {
-  padding-block: var(--section-spacing);
   background-color: var(--color-primary);
 }

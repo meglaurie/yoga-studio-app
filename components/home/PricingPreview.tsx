@@ -1,37 +1,94 @@
+import Section from "../ui/Section";
+import Card from "../ui/Card";
+import { Heading } from '../ui/Heading';
+import Text from "../ui/Text";
+import Button from "../ui/Button";
+import Grid from "../ui/Grid";
+
+const plans = [
+  {
+    name: "10 Classes Pass",
+    price: "$200",
+    features: [
+      "Access to all classes",
+      "Basic support",
+    ],
+    variant: "basic",
+  },
+  {
+    name: "20 Classes Pass",
+    price: "$350",
+    features: [
+      "Access to all classes",
+      "Priority support",
+      "Personalized coaching",
+    ],
+    variant: "premium",
+  },
+  {
+    name: "Monthly Membership",
+    price: "$120/month",
+    features: [
+      "Access to all classes",
+      "Priority support",
+      "Personalized coaching",
+    ],
+    variant: "premium",
+  },
+  {
+    name: "Annual Membership",
+    price: "$1320/year",
+    features: [
+      "Access to all classes",
+      "Priority support",
+      "Personalized coaching",
+    ],
+    variant: "premium",
+  },
+];
+
 export default function PricingPreview() {
   return (
-    <div className="flex h-screen w-full flex-col items-center justify-center text-white bg-olive-500">
-      <h2 className="mb-4 text-4xl font-bold">Simple, Transparent Pricing</h2>
-      <p className="mb-8 text-xl">Choose the plan that works best for you.</p>
-      <div className="flex flex-col gap-8 md:flex-row">
-        <div className="rounded-lg bg-white p-6 text-blue-500 shadow-md">
-          <h3 className="mb-2 text-2xl font-bold">Basic</h3>
-          <p className="mb-4 text-3xl font-bold">
-            $19<span className="text-lg">/month</span>
-          </p>
-          <ul className="mb-4 list-inside list-disc">
-            <li>Access to all classes</li>
-            <li>Basic support</li>
-          </ul>
-          <button className="rounded-lg bg-blue-500 px-6 py-3 font-semibold text-white shadow-md transition duration-300 hover:bg-blue-600">
-            Get Started
-          </button>
-        </div>
-        <div className="rounded-lg bg-white p-6 text-purple-500 shadow-md">
-          <h3 className="mb-2 text-2xl font-bold">Premium</h3>
-          <p className="mb-4 text-3xl font-bold">
-            $29<span className="text-lg">/month</span>
-          </p>
-          <ul className="mb-4 list-inside list-disc">
-            <li>Access to all classes</li>
-            <li>Priority support</li>
-            <li>Personalized coaching</li>
-          </ul>
-          <button className="rounded-lg bg-purple-500 px-6 py-3 font-semibold text-white shadow-md transition duration-300 hover:bg-purple-600">
-            Get Started
-          </button>
-        </div>
+    <Section className="pricing-preview">
+      <div className="pricing-preview__header">
+        <Heading as="h2" size="h2">
+          Simple, Transparent Pricing
+        </Heading>
+
+        <Text>
+          Choose the plan that works best for you.
+        </Text>
       </div>
-    </div>
+
+      <div className="pricing-preview__plans">
+        <Grid columns={4} gap="lg">
+        {plans.map((plan) => (
+          <Card
+            key={plan.name}
+            className={`pricing-card pricing-card--${plan.variant}`}
+          >
+            <Heading as="h3" size="h3">
+              {plan.name}
+            </Heading>
+
+            <p className="pricing-card__price">
+              {plan.price}
+            </p>
+
+            <ul className="pricing-card__features">
+              {plan.features.map((feature) => (
+                <li key={feature}>{feature}</li>
+              ))}
+            </ul>
+
+            <Button>
+              Get Started
+            </Button>
+          </Card>
+        ))}
+        </Grid>
+      </div>
+    </Section>
   );
 }
+

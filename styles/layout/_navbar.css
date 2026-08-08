@@ -1,18 +1,30 @@
 .navbar {
   width: 100%;
-  background: var(--color-surface);
+  background: var(--color-secondary);
   border-bottom: 1px solid var(--color-border);
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
 }
 
 .navbar__container {
-  max-width: var(--container-width);
+  background: var(--color-primary);
+  min-width: 100%;
+  /* max-width: var(--container-width); */
   margin: 0 auto;
+  opacity: 0.85;
 
   display: flex;
   align-items: center;
   justify-content: space-between;
 
   padding: var(--space-3) var(--space-4);
+
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
 }
 
 

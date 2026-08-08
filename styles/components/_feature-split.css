@@ -6,6 +6,10 @@
   gap: 4rem;
 
   align-items: center;
+
+  padding: var(--space-5) var(--space-4);
+
+  text-align: center;
 }
 
 .feature-split--reverse {
@@ -20,6 +24,8 @@
   width: 100%;
 
   display: block;
+
+  border-radius: var(--border-radius);
 }
 
 .feature-split__content {
@@ -28,10 +34,20 @@
   flex-direction: column;
 
   gap: 1.5rem;
+
+   align-items: center;
 }
 
 @media (max-width: 768px) {
   .feature-split {
     grid-template-columns: 1fr;
   }
+}
+
+.feature-split__divider {
+  width: 90%;
+ 
+  margin: 0 auto;
+
+  color: var(--color-border);
 }

@@ -1,4 +1,7 @@
 import clsx from 'clsx';
+import Button from '../ui/Button';
+import { Heading } from '../ui/Heading';
+import Text from '../ui/Text';
 
 interface FeatureSplitProps {
   image: string;
@@ -18,21 +21,31 @@ export default function FeatureSplit({
   reverse = false,
 }: FeatureSplitProps) {
   return (
-    <section
+    <>
+      <section
       className={clsx('feature-split', {
         'feature-split--reverse': reverse,
       })}
-    >
+      >
       <div className="feature-split__image">
         <img src={image} alt={imageAlt} />
       </div>
 
       <div className="feature-split__content">
-        <h2>{title}</h2>
-        <p>{description}</p>
+        <Heading as="h2" size="h2">
+          {title}
+        </Heading>
+        <Text>{description}</Text>
 
-        {buttonText && <button>{buttonText}</button>}
+        {buttonText && (
+          <Button>
+            {buttonText}
+          </Button>
+        )}
       </div>
+     
     </section>
+     <hr className="feature-split__divider" />
+    </>
   );
 }
