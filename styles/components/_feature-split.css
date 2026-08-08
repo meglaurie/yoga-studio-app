@@ -25,7 +25,10 @@
 
   display: block;
 
+  padding: var(--space-4);
+
   border-radius: var(--border-radius);
+
 }
 
 .feature-split__content {

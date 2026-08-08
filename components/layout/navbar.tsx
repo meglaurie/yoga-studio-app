@@ -9,14 +9,11 @@ export default function Navbar() {
   return (
     <nav className="navbar__container">
       <Logo
-        src="/imgs/mandala-svgrepo-com 1.png"
+        src="/imgs/mandala-svgrepo-com 2.png"
         alt="Stillwater Yoga Studio Logo"
-        width={50}
-        height={50}
+        width={60}
+        height={60}
       />
-      <Link href="/" className="navbar__logo">
-        Stillwater Yoga
-      </Link>
       {/* Desktop */}
       <ul className="navbar__menu">
         {navigation.map((item) => (

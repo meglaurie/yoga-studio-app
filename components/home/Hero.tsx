@@ -10,6 +10,8 @@ interface HeroProps {
 
   title: string;
 
+  subtitle?: string;
+
   description: string;
 
   buttonText?: string;
@@ -21,6 +23,8 @@ export default function Hero({
   backgroundImage,
 
   title,
+
+  subtitle,
 
   description,
 
@@ -46,6 +50,12 @@ export default function Hero({
             <Heading as="h1" size="display">
               {title}
             </Heading>
+
+            {subtitle && (
+              <Heading as="h2" size="h2">
+                {subtitle}
+              </Heading>
+            )}
 
             <p>{description}</p>
 

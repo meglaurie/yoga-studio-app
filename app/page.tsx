@@ -12,7 +12,7 @@ export default function Home() {
     <>
       <Hero
         backgroundImage="/imgs/yogaHeroImg.jpg"
-        title="Welcome to Our Yoga Studio"
+        title="Stillwater Yoga Studio"
         description="Find your inner peace and strength with our expert instructors."
         buttonText="Book Now"
         buttonHref="/classes"
