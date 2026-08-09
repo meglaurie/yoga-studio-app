@@ -76,7 +76,7 @@ export default function ScheduleTable({
                     </Button>
                   ) : (
                     <Link
-                      href="/login"
+                      href="/login?callbackUrl=/schedule"
                       className="schedule-table__login-link"
                     >
                       Login

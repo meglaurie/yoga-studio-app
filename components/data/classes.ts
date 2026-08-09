@@ -87,6 +87,6 @@ export const classes: YogaClass[] = [
   instructor: 'Maya Chen',
   level: 'All Levels',
   capacity: 15,
-  booked: 6,
+  booked: 15,
 },
 ];
