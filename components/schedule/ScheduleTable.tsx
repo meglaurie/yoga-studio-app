@@ -1,67 +1,93 @@
-import { scheduleData } from '@/components/data/scheduleData';
+import Link from 'next/link';
+
+import Button from '@/components/ui/Button';
+import { YogaClass } from '@/types/class';
 
 interface ScheduleTableProps {
-  selectedDate: string;
+  classes: YogaClass[];
+  isAuthenticated: boolean;
 }
 
 export default function ScheduleTable({
-  selectedDate,
+  classes,
+  isAuthenticated,
 }: ScheduleTableProps) {
-  const classes = scheduleData.filter(
-    (classItem) => classItem.date === selectedDate,
-  );
+  if (classes.length === 0) {
+    return (
+      <div className="schedule-table__empty">
+        <p>No classes are scheduled for this day.</p>
+      </div>
+    );
+  }
 
   return (
-    <section>
-      <h2>Classes</h2>
+    <div className="schedule-table__wrapper">
+      <table className="schedule-table">
+        <thead>
+          <tr>
+            <th scope="col">Time</th>
+            <th scope="col">Class</th>
+            <th scope="col">Instructor</th>
+            <th scope="col">Level</th>
+            <th scope="col">Availability</th>
+            <th scope="col">
+              <span className="sr-only">Booking action</span>
+            </th>
+          </tr>
+        </thead>
 
-      {classes.length === 0 ? (
-        <p>No classes are scheduled for this day.</p>
-      ) : (
-        <table>
-          <thead>
-            <tr>
-              <th>Time</th>
-              <th>Class</th>
-              <th>Instructor</th>
-              <th>Duration</th>
-              <th>Availability</th>
-              <th>Action</th>
-            </tr>
-          </thead>
+        <tbody>
+          {classes.map((yogaClass) => {
+            const spotsRemaining =
+              yogaClass.capacity - yogaClass.booked;
 
-          <tbody>
-            {classes.map((classItem) => {
-              const spotsRemaining =
-                classItem.capacity - classItem.booked;
+            const isFull = spotsRemaining <= 0;
 
-              return (
-                <tr key={classItem.id}>
-                  <td>{classItem.time}</td>
+            return (
+              <tr key={yogaClass.id}>
+                <td>
+                  <span>{yogaClass.startTime}</span>
 
-                  <td>{classItem.title}</td>
+                  <span className="schedule-table__time-end">
+                    {yogaClass.endTime}
+                  </span>
+                </td>
 
-                  <td>{classItem.instructor}</td>
+                <td>
+                  <strong>{yogaClass.name}</strong>
+                </td>
 
-                  <td>{classItem.duration}</td>
+                <td>{yogaClass.instructor}</td>
 
-                  <td>
-                    {spotsRemaining > 0
-                      ? `${spotsRemaining} spots`
-                      : 'Full'}
-                  </td>
+                <td>{yogaClass.level}</td>
 
-                  <td>
-                    <button type="button">
+                <td>
+                  {isFull ? 'Full' : `${spotsRemaining} spots`}
+                </td>
+
+                <td>
+                  {isFull ? (
+                    <Button variant="outline" disabled>
+                      Full
+                    </Button>
+                  ) : isAuthenticated ? (
+                    <Button variant="primary">
+                      Book
+                    </Button>
+                  ) : (
+                    <Link
+                      href="/login"
+                      className="schedule-table__login-link"
+                    >
                       Login
-                    </button>
-                  </td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
-      )}
-    </section>
+                    </Link>
+                  )}
+                </td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
+    </div>
   );
 }
