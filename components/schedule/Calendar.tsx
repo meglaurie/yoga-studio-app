@@ -10,7 +10,17 @@ interface CalendarProps {
 const DAYS_TO_SHOW = 14;
 
 function formatDate(date: Date): string {
-  return date.toISOString().split('T')[0];
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const day = String(date.getDate()).padStart(2, '0');
+
+  return `${year}-${month}-${day}`;
+}
+
+function parseDate(dateString: string): Date {
+  const [year, month, day] = dateString.split('-').map(Number);
+
+  return new Date(year, month - 1, day);
 }
 
 function getDays(startDate: Date): Date[] {
@@ -24,7 +34,6 @@ function getDays(startDate: Date): Date[] {
 
 function getWeekStart(date: Date): Date {
   const day = date.getDay();
-
   const difference = day === 0 ? -6 : 1 - day;
 
   const monday = new Date(date);
@@ -38,7 +47,7 @@ export default function Calendar({
   onDateChange,
 }: CalendarProps) {
   const [startDate, setStartDate] = useState(() => {
-    return getWeekStart(new Date());
+    return getWeekStart(parseDate(selectedDate));
   });
 
   const days = useMemo(() => getDays(startDate), [startDate]);

@@ -1,27 +1,29 @@
 'use client';
 
-import { useState } from 'react';
-
 import Calendar from '@/components/schedule/Calendar';
 import ScheduleTable from '@/components/schedule/ScheduleTable';
-import { classes } from '@/components/data/classes';
-// import { classesForSelectedDate } from '@/components/data/scheduleData';
+import type { YogaClass } from '@/types/class';
 
-export default function Schedule() {
-  const [selectedDate, setSelectedDate] = useState('2026-08-10');
+interface ScheduleProps {
+  selectedDate: string;
+  classes: YogaClass[];
+}
 
-  const classesForSelectedDate = classes.filter(
-  (yogaClass) => yogaClass.date === selectedDate
-  );
+export default function Schedule({
+  selectedDate,
+  classes,
+}: ScheduleProps) {
   return (
     <div>
       <Calendar
         selectedDate={selectedDate}
-        onDateChange={setSelectedDate}
+        onDateChange={(date) => {
+          window.location.href = `/schedule?date=${date}`;
+        }}
       />
 
       <ScheduleTable
-        classes={classesForSelectedDate}
+        classes={classes}
         isAuthenticated={false}
       />
     </div>

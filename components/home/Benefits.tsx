@@ -7,6 +7,8 @@ export default function Benefits() {
       <FeatureSplit
         image={'/imgs/dylan-gillis-YJdCZba0TYE-unsplash 1.png'}
 
+        imageAlt="Person practicing yoga on a mat"
+
         title="Benefits of Practicing Yoga"
 
         description="Regular yoga practice helps increase flexibility and range of motion."

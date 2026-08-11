@@ -6,6 +6,7 @@ export default function FeaturedClasses() {
     <Section className="featured-classes">
       <FeatureSplit
           image={'/imgs/jaspinder-singh-Deqn8q739DA-unsplash 1.png'}
+          imageAlt="Yoga class in session"
           title="Featured Classes"
           description="Explore our most popular classes and find the perfect fit for your yoga journey."
           buttonText="View"

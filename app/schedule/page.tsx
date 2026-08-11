@@ -1,18 +1,43 @@
 import Section from '@/components/ui/Section';
 import { Heading } from '@/components/ui/Heading';
+import Text from '@/components/ui/Text';
 
 import Schedule from '@/components/schedule/Schedule';
+import { getClassesForDate } from '@/lib/schedule';
+import { formatDateForInput } from '@/lib/date';
+import { mapClassToYogaClass } from '@/lib/mappers/class';
 
-export default function SchedulePage() {
+interface SchedulePageProps {
+  searchParams: Promise<{
+    date?: string;
+  }>;
+}
+
+export default async function SchedulePage({
+  searchParams,
+}: SchedulePageProps) {
+  const params = await searchParams;
+
+  const selectedDate = params.date ?? formatDateForInput(new Date());
+
+  const classes = await getClassesForDate(selectedDate);
+
+  const scheduleClasses = classes.map(mapClassToYogaClass);
+
   return (
     <Section>
       <Heading as="h1" size="display">
         Class Schedule
       </Heading>
 
-      <p>Find a class that fits your schedule and your practice.</p>
+      <Text>
+        Find a class that fits your schedule and your practice.
+      </Text>
 
-      <Schedule />
+     <Schedule
+        selectedDate={selectedDate}
+        classes={scheduleClasses}
+    />
     </Section>
   );
 }

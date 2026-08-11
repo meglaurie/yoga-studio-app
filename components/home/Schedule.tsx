@@ -7,6 +7,8 @@ export default function Schedule() {
       <FeatureSplit
         image={'/imgs/anupam-mahapatra-Vz0RbclzG_w-unsplash 1.png'}
 
+        imageAlt="Yoga class in session"
+
         title="Schedule"
 
         description="Check out our class schedule and find the perfect time for you."

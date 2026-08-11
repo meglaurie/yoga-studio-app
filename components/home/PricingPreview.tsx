@@ -61,7 +61,7 @@ export default function PricingPreview() {
       </div>
 
       <div className="pricing-preview__plans">
-        <Grid columns={4} gap="lg">
+        <Grid columns={4}>
         {plans.map((plan) => (
           <Card
             key={plan.name}

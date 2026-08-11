@@ -21,7 +21,7 @@ export default function Footer() {
             width={100}
             height={100}
           />
-          <Heading as="h2" size="h3" className="footer__brand">
+          <Heading as="h2" size="h3">
             Stillwater Yoga Studio
           </Heading>
 
