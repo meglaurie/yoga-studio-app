@@ -118,42 +118,60 @@ async function main() {
   const now = new Date();
 
   const classes = [
-    {
-      name: "Morning Flow",
-      description: "A balanced flow to start your morning with energy and intention.",
-      startAt: new Date(now.getTime() + 24 * 60 * 60 * 1000),
-      endAt: new Date(now.getTime() + 25 * 60 * 60 * 1000),
-      capacity: 18,
-    },
-    {
-      name: "Gentle Yoga",
-      description: "A slower-paced practice focused on mobility, breath, and relaxation.",
-      startAt: new Date(now.getTime() + 26 * 60 * 60 * 1000),
-      endAt: new Date(now.getTime() + 27 * 60 * 60 * 1000),
-      capacity: 16,
-    },
-    {
-      name: "Power Vinyasa",
-      description: "An energizing vinyasa practice for strength and focus.",
-      startAt: new Date(now.getTime() + 48 * 60 * 60 * 1000),
-      endAt: new Date(now.getTime() + 49 * 60 * 60 * 1000),
-      capacity: 20,
-    },
-    {
-      name: "Yin & Restore",
-      description: "A quiet evening practice designed to release tension and encourage deep rest.",
-      startAt: new Date(now.getTime() + 50 * 60 * 60 * 1000),
-      endAt: new Date(now.getTime() + 51 * 60 * 60 * 1000),
-      capacity: 15,
-    },
-    {
-      name: "Weekend Flow",
-      description: "A welcoming weekend practice suitable for a range of experience levels.",
-      startAt: new Date(now.getTime() + 72 * 60 * 60 * 1000),
-      endAt: new Date(now.getTime() + 73 * 60 * 60 * 1000),
-      capacity: 20,
-    },
-  ];
+  {
+    name: 'Morning Flow',
+    description:
+      'A balanced flow to start your morning with energy and intention.',
+    instructorName: 'Maya Chen',
+    level: 'ALL_LEVELS' as const,
+    startAt: new Date(now.getTime() + 24 * 60 * 60 * 1000),
+    endAt: new Date(now.getTime() + 25 * 60 * 60 * 1000),
+    capacity: 18,
+  },
+  {
+    name: 'Gentle Yoga',
+    description:
+      'A slower-paced practice focused on mobility, breath, and relaxation.',
+    instructorName: 'Sarah Bennett',
+    level: 'BEGINNER' as const,
+    startAt: new Date(now.getTime() + 26 * 60 * 60 * 1000),
+    endAt: new Date(now.getTime() + 27 * 60 * 60 * 1000),
+    capacity: 16,
+  },
+  {
+    name: 'Power Vinyasa',
+    description:
+      'An energizing vinyasa practice for strength and focus.',
+    instructorName: 'Maya Chen',
+    level: 'INTERMEDIATE' as const,
+    startAt: new Date(now.getTime() + 48 * 60 * 60 * 1000),
+    endAt: new Date(now.getTime() + 49 * 60 * 60 * 1000),
+    capacity: 20,
+  },
+  {
+    name: 'Yin & Restore',
+    description:
+      'A quiet evening practice designed to release tension and encourage deep rest.',
+    instructorName: 'Emma Wilson',
+    level: 'ALL_LEVELS' as const,
+    startAt: new Date(now.getTime() + 50 * 60 * 60 * 1000),
+    endAt: new Date(now.getTime() + 51 * 60 * 60 * 1000),
+    capacity: 15,
+  },
+  {
+    name: 'Weekend Flow',
+    description:
+      'A welcoming weekend practice suitable for a range of experience levels.',
+    instructorName: 'Sarah Bennett',
+    level: 'ALL_LEVELS' as const,
+    startAt: new Date(now.getTime() + 72 * 60 * 60 * 1000),
+    endAt: new Date(now.getTime() + 73 * 60 * 60 * 1000),
+    capacity: 20,
+  },
+];
+
+
+  await prisma.class.deleteMany();
 
   for (const yogaClass of classes) {
     await prisma.class.create({

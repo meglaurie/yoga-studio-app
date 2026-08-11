@@ -29,6 +29,13 @@ enum ProductType {
   ANNUAL_MEMBERSHIP
 }
 
+enum ClassLevel {
+  BEGINNER
+  ALL_LEVELS
+  INTERMEDIATE
+  ADVANCED
+}
+
 enum PurchaseStatus {
   PENDING
   PAID
@@ -51,12 +58,14 @@ model User {
 }
 
 model Class {
-  id          String   @id @default(cuid())
-  name        String
-  description String?
-  startAt     DateTime
-  endAt       DateTime
-  capacity    Int
+  id             String     @id @default(cuid())
+  name           String
+  description    String?
+  instructorName String
+  level          ClassLevel
+  startAt        DateTime
+  endAt          DateTime
+  capacity       Int
 
   createdById String
   createdBy   User   @relation("ClassCreator", fields: [createdById], references: [id])
