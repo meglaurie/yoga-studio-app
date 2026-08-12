@@ -4,6 +4,7 @@ import Text from '@/components/ui/Text';
 
 import Schedule from '@/components/schedule/Schedule';
 import { getClassesForDate } from '@/lib/schedule';
+import { getCurrentUser } from '@/lib/auth-server';
 import { formatDateForInput } from '@/lib/date';
 import { mapClassToYogaClass } from '@/lib/mappers/class';
 
@@ -24,6 +25,8 @@ export default async function SchedulePage({
 
   const scheduleClasses = classes.map(mapClassToYogaClass);
 
+  const user = await getCurrentUser();
+
   return (
     <Section>
       <Heading as="h1" size="display">
@@ -37,6 +40,7 @@ export default async function SchedulePage({
      <Schedule
         selectedDate={selectedDate}
         classes={scheduleClasses}
+        isAuthenticated={Boolean(user)}
     />
     </Section>
   );

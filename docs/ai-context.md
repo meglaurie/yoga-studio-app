@@ -18,18 +18,18 @@ Build a production-style yoga studio booking platform called **Stillwater Yoga S
 
 The finished application should demonstrate:
 
-- Next.js App Router
-- React + TypeScript
-- Tailwind CSS
-- Component architecture
-- Design systems
-- Authentication
-- Role-based authorization
-- PostgreSQL
-- Prisma ORM
-- Auth.js
+- Next.js App Router ✅
+- React + TypeScript ✅
+- Tailwind CSS ✅
+- Component architecture ✅
+- Design systems ✅
+- Authentication ✅
+- Role-based authorization ✅
+- PostgreSQL ✅
+- Prisma ORM ✅
+- Auth.js ✅
 - Stripe payments
-- Protected routes
+- Protected routes *
 - CRUD APIs
 - Dashboard architecture
 - Deployment

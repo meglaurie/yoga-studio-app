@@ -7,11 +7,13 @@ import type { YogaClass } from '@/types/class';
 interface ScheduleProps {
   selectedDate: string;
   classes: YogaClass[];
+  isAuthenticated: boolean;
 }
 
 export default function Schedule({
   selectedDate,
   classes,
+  isAuthenticated
 }: ScheduleProps) {
   return (
     <div>
@@ -24,7 +26,7 @@ export default function Schedule({
 
       <ScheduleTable
         classes={classes}
-        isAuthenticated={false}
+        isAuthenticated={isAuthenticated}
       />
     </div>
   );

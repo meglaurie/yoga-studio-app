@@ -1,6 +1,8 @@
 import Link from 'next/link';
 
 import Button from '@/components/ui/Button';
+import BookingButton from './BookingButton';
+
 import { YogaClass } from '@/types/class';
 
 interface ScheduleTableProps {
@@ -71,9 +73,7 @@ export default function ScheduleTable({
                       Full
                     </Button>
                   ) : isAuthenticated ? (
-                    <Button variant="primary">
-                      Book
-                    </Button>
+                    <BookingButton classId={yogaClass.id} />
                   ) : (
                     <Link
                       href="/login?callbackUrl=/schedule"
