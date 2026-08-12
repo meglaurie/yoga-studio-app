@@ -1,4 +1,5 @@
 import "dotenv/config";
+import bcrypt from 'bcryptjs';
 import { PrismaPg } from "@prisma/adapter-pg";
 import { PrismaClient } from "../lib/generated/prisma/client";
 
@@ -12,43 +13,51 @@ const prisma = new PrismaClient({
 
 async function main() {
   console.log("🌱 Starting database seed...");
+  const developmentPassword = 'StillwaterDev123!';
+  const passwordHash = await bcrypt.hash(developmentPassword, 12);
 
   const owner = await prisma.user.upsert({
-    where: {
-      email: "owner@stillwateryoga.test",
-    },
-    update: {},
-    create: {
-      name: "Stillwater Owner",
-      email: "owner@stillwateryoga.test",
-      passwordHash: "DEV_ONLY_REPLACE_WITH_REAL_HASH",
-      role: "OWNER",
-    },
-  });
+  where: {
+    email: "owner@stillwateryoga.test",
+  },
+  update: {
+    passwordHash,
+  },
+  create: {
+    name: "Stillwater Owner",
+    email: "owner@stillwateryoga.test",
+    passwordHash,
+    role: "OWNER",
+  },
+});
 
   const members = await Promise.all([
-    prisma.user.upsert({
+   prisma.user.upsert({
       where: {
         email: "sarah@stillwateryoga.test",
       },
-      update: {},
+      update: {
+        passwordHash,
+      },
       create: {
         name: "Sarah Mitchell",
         email: "sarah@stillwateryoga.test",
-        passwordHash: "DEV_ONLY_REPLACE_WITH_REAL_HASH",
+        passwordHash,
         role: "MEMBER",
       },
     }),
 
-    prisma.user.upsert({
+   prisma.user.upsert({
       where: {
         email: "james@stillwateryoga.test",
       },
-      update: {},
+      update: {
+        passwordHash,
+      },
       create: {
         name: "James Carter",
         email: "james@stillwateryoga.test",
-        passwordHash: "DEV_ONLY_REPLACE_WITH_REAL_HASH",
+        passwordHash,
         role: "MEMBER",
       },
     }),
