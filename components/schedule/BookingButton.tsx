@@ -8,19 +8,21 @@ import Button from '@/components/ui/Button';
 interface BookingButtonProps {
   classId: string;
   isBooked: boolean;
+  bookingId: string | null;
 }
 
 export default function BookingButton({
   classId,
   isBooked,
+  bookingId,
 }: BookingButtonProps) {
   const router = useRouter();
 
-  const [isBooking, setIsBooking] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  async function handleBooking() {
-    setIsBooking(true);
+  async function handleBook() {
+    setIsLoading(true);
     setError(null);
 
     try {
@@ -45,27 +47,57 @@ export default function BookingButton({
     } catch {
       setError('Something went wrong. Please try again.');
     } finally {
-      setIsBooking(false);
+      setIsLoading(false);
     }
   }
 
-  if (isBooked) {
-    return (
-      <Button variant="outline" disabled>
-        Booked
-      </Button>
-    );
+  async function handleCancel() {
+    if (!bookingId) {
+      setError('Unable to cancel this booking.');
+      return;
+    }
+
+    setIsLoading(true);
+    setError(null);
+
+    try {
+      const response = await fetch(
+        `/api/bookings/${bookingId}/cancel`,
+        {
+          method: 'POST',
+        },
+      );
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        setError(data.error ?? 'Unable to cancel this booking.');
+        return;
+      }
+
+      router.refresh();
+    } catch {
+      setError('Something went wrong. Please try again.');
+    } finally {
+      setIsLoading(false);
+    }
   }
 
   return (
     <div>
       <Button
-        variant="primary"
+        variant={isBooked ? 'outline' : 'primary'}
         type="button"
-        onClick={handleBooking}
-        disabled={isBooking}
+        onClick={isBooked ? handleCancel : handleBook}
+        disabled={isLoading}
       >
-        {isBooking ? 'Booking...' : 'Book'}
+        {isLoading
+          ? isBooked
+            ? 'Cancelling...'
+            : 'Booking...'
+          : isBooked
+            ? 'Cancel'
+            : 'Book'}
       </Button>
 
       {error && (

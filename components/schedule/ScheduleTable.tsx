@@ -76,6 +76,7 @@ export default function ScheduleTable({
                     <BookingButton
                       classId={yogaClass.id}
                       isBooked={yogaClass.isBooked}
+                      bookingId={yogaClass.bookingId}
                     />
                   ) : (
                     <Link

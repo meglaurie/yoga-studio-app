@@ -38,5 +38,6 @@ export function mapClassToYogaClass(
     capacity: yogaClass.capacity,
     booked: yogaClass._count.bookings,
     isBooked: yogaClass.bookings.length > 0,
+    bookingId: yogaClass.bookings[0]?.id ?? null,
   };
 }
