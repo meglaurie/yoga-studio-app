@@ -1,6 +1,9 @@
 import { prisma } from '@/lib/prisma';
 
-export async function getClassesForDate(date: string) {
+export async function getClassesForDate(
+  date: string,
+  userId?: string,
+) {
   const startOfDay = new Date(`${date}T00:00:00`);
   const endOfDay = new Date(`${date}T23:59:59.999`);
 
@@ -12,15 +15,27 @@ export async function getClassesForDate(date: string) {
       },
     },
     include: {
-      _count: {
+    _count: {
         select: {
-          bookings: {
+        bookings: {
             where: {
-              status: 'CONFIRMED',
+            status: 'CONFIRMED',
             },
-          },
         },
-      },
+        },
+    },
+
+    bookings: userId
+        ? {
+            where: {
+            userId,
+            status: 'CONFIRMED',
+            },
+            select: {
+            id: true,
+            },
+        }
+        : undefined,
     },
     orderBy: {
       startAt: 'asc',

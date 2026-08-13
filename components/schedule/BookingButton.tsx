@@ -7,16 +7,17 @@ import Button from '@/components/ui/Button';
 
 interface BookingButtonProps {
   classId: string;
+  isBooked: boolean;
 }
 
 export default function BookingButton({
   classId,
+  isBooked,
 }: BookingButtonProps) {
   const router = useRouter();
 
   const [isBooking, setIsBooking] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [booked, setBooked] = useState(false);
 
   async function handleBooking() {
     setIsBooking(true);
@@ -40,8 +41,6 @@ export default function BookingButton({
         return;
       }
 
-      setBooked(true);
-
       router.refresh();
     } catch {
       setError('Something went wrong. Please try again.');
@@ -50,7 +49,7 @@ export default function BookingButton({
     }
   }
 
-  if (booked) {
+  if (isBooked) {
     return (
       <Button variant="outline" disabled>
         Booked

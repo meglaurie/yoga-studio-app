@@ -12,6 +12,9 @@ interface PrismaClass {
   _count: {
     bookings: number;
   };
+  bookings: {
+    id: string;
+  }[];
 }
 
 function formatTime(date: Date): string {
@@ -34,5 +37,6 @@ export function mapClassToYogaClass(
     level: yogaClass.level,
     capacity: yogaClass.capacity,
     booked: yogaClass._count.bookings,
+    isBooked: yogaClass.bookings.length > 0,
   };
 }

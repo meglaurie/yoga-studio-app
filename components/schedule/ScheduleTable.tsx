@@ -73,7 +73,10 @@ export default function ScheduleTable({
                       Full
                     </Button>
                   ) : isAuthenticated ? (
-                    <BookingButton classId={yogaClass.id} />
+                    <BookingButton
+                      classId={yogaClass.id}
+                      isBooked={yogaClass.isBooked}
+                    />
                   ) : (
                     <Link
                       href="/login?callbackUrl=/schedule"

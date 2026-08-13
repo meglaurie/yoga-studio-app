@@ -8,4 +8,5 @@ export interface YogaClass {
   level: string;
   capacity: number;
   booked: number;
+  isBooked: boolean;
 }

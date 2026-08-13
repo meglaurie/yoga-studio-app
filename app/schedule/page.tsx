@@ -21,11 +21,14 @@ export default async function SchedulePage({
 
   const selectedDate = params.date ?? formatDateForInput(new Date());
 
-  const classes = await getClassesForDate(selectedDate);
+  const user = await getCurrentUser();
+
+  const classes = await getClassesForDate(
+    selectedDate,
+    user?.id,
+  );
 
   const scheduleClasses = classes.map(mapClassToYogaClass);
-
-  const user = await getCurrentUser();
 
   return (
     <Section>
