@@ -33,6 +33,7 @@ export default function BookingButton({
         },
         body: JSON.stringify({
           classId,
+          attendeeCount: 1,
         }),
       });
 
