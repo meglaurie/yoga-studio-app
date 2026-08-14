@@ -29,9 +29,9 @@ The finished application should demonstrate:
 - Prisma ORM ✅
 - Auth.js ✅
 - Stripe payments
-- Protected routes *
-- CRUD APIs
-- Dashboard architecture
+- Protected routes ✅
+- CRUD APIs ✅
+- Dashboard architecture *
 - Deployment
 
 The goal is a portfolio project that resembles a real SaaS application rather than a simple CRUD demo.

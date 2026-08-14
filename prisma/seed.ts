@@ -68,22 +68,27 @@ async function main() {
       where: {
         id: "drop-in-class",
       },
-      update: {},
-      create: {
-        id: "drop-in-class",
-        name: "Drop-In Class",
-        description: "Single class access.",
-        type: "DROP_IN",
-        priceCents: 2500,
-        currency: "CAD",
+      update: {
+        creditCount: 1,
       },
+      create: {
+      id: "drop-in-class",
+      name: "Drop-In Class",
+      description: "Single class access.",
+      type: "DROP_IN",
+      priceCents: 2500,
+      currency: "CAD",
+      creditCount: 1,
+    },
     }),
 
     prisma.product.upsert({
       where: {
         id: "ten-class-pass",
       },
-      update: {},
+      update: {
+        creditCount: 10,
+      },
       create: {
         id: "ten-class-pass",
         name: "10-Class Pass",
@@ -91,6 +96,7 @@ async function main() {
         type: "CLASS_PASS",
         priceCents: 20000,
         currency: "CAD",
+        creditCount: 10,
       },
     }),
 
@@ -179,8 +185,9 @@ async function main() {
   },
 ];
 
-
-  await prisma.class.deleteMany();
+ await prisma.bookingCreditUsage.deleteMany();
+ await prisma.booking.deleteMany();
+ await prisma.class.deleteMany();
 
   for (const yogaClass of classes) {
     await prisma.class.create({

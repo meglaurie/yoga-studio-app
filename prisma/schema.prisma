@@ -52,9 +52,11 @@ model User {
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
 
-  bookings  Booking[]
-  purchases Purchase[]
-  classes   Class[]    @relation("ClassCreator")
+  bookings    Booking[]
+  purchases   Purchase[]
+  classPasses ClassPass[]
+  memberships Membership[]
+  classes     Class[]      @relation("ClassCreator")
 }
 
 model Class {
@@ -80,15 +82,17 @@ model Class {
 }
 
 model Booking {
-  id        String        @id @default(cuid())
-  userId    String
-  classId   String
-  status    BookingStatus @default(CONFIRMED)
-  createdAt DateTime      @default(now())
-  updatedAt DateTime      @updatedAt
+  id            String        @id @default(cuid())
+  userId        String
+  classId       String
+  attendeeCount Int           @default(1)
+  status        BookingStatus @default(CONFIRMED)
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
 
-  user  User  @relation(fields: [userId], references: [id])
-  class Class @relation(fields: [classId], references: [id])
+  user         User                 @relation(fields: [userId], references: [id])
+  class        Class                @relation(fields: [classId], references: [id])
+  creditUsages BookingCreditUsage[]
 
   @@unique([userId, classId])
   @@index([classId])
@@ -102,6 +106,7 @@ model Product {
   type        ProductType
   priceCents  Int
   currency    String      @default("CAD")
+  creditCount Int?
   active      Boolean     @default(true)
 
   purchases Purchase[]
@@ -124,10 +129,61 @@ model Purchase {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  user    User    @relation(fields: [userId], references: [id])
-  product Product @relation(fields: [productId], references: [id])
+  user       User        @relation(fields: [userId], references: [id])
+  product    Product     @relation(fields: [productId], references: [id])
+  classPass  ClassPass?
+  membership Membership?
 
   @@index([userId])
   @@index([productId])
   @@index([status])
+}
+
+model ClassPass {
+  id               String   @id @default(cuid())
+  userId           String
+  purchaseId       String   @unique
+  totalCredits     Int
+  remainingCredits Int
+  expiresAt        DateTime
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  user     User                 @relation(fields: [userId], references: [id])
+  purchase Purchase             @relation(fields: [purchaseId], references: [id])
+  usages   BookingCreditUsage[]
+
+  @@index([userId])
+  @@index([expiresAt])
+}
+
+model Membership {
+  id         String   @id @default(cuid())
+  userId     String
+  purchaseId String   @unique
+  startsAt   DateTime
+  expiresAt  DateTime
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  user     User     @relation(fields: [userId], references: [id])
+  purchase Purchase @relation(fields: [purchaseId], references: [id])
+
+  @@index([userId])
+  @@index([expiresAt])
+}
+
+model BookingCreditUsage {
+  id          String   @id @default(cuid())
+  bookingId   String
+  classPassId String
+  creditsUsed Int
+  createdAt   DateTime @default(now())
+
+  booking   Booking   @relation(fields: [bookingId], references: [id])
+  classPass ClassPass @relation(fields: [classPassId], references: [id])
+
+  @@unique([bookingId, classPassId])
+  @@index([bookingId])
+  @@index([classPassId])
 }
