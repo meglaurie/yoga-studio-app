@@ -1,7 +1,10 @@
-import { NextResponse } from 'next/server';
+import { NextResponse } from "next/server";
 
-import { prisma } from '@/lib/prisma';
-import { getCurrentUser } from '@/lib/auth-server';
+import { getCurrentUser } from "@/lib/auth-server";
+import {
+  BookingError,
+  cancelBooking,
+} from "@/lib/bookings";
 
 interface CancelBookingRouteContext {
   params: Promise<{
@@ -13,86 +16,75 @@ export async function POST(
   request: Request,
   { params }: CancelBookingRouteContext,
 ) {
-  const user = await getCurrentUser();
+  try {
+    const user = await getCurrentUser();
 
-  if (!user) {
-    return NextResponse.json(
-      {
-        error: 'Unauthorized',
-      },
-      {
-        status: 401,
-      },
-    );
-  }
+    if (!user) {
+      return NextResponse.json(
+        {
+          error: "Authentication required.",
+        },
+        {
+          status: 401,
+        },
+      );
+    }
 
-  const { id } = await params;
+    const { id } = await params;
 
-  if (!id) {
-    return NextResponse.json(
-      {
-        error: 'Booking ID is required',
-      },
-      {
-        status: 400,
-      },
-    );
-  }
+    if (!id) {
+      return NextResponse.json(
+        {
+          error: "Booking ID is required.",
+        },
+        {
+          status: 400,
+        },
+      );
+    }
 
-  const booking = await prisma.booking.findUnique({
-    where: {
+    const result = await cancelBooking(
+      user.id,
       id,
-    },
-  });
+    );
 
-  if (!booking) {
     return NextResponse.json(
       {
-        error: 'Booking not found',
+        booking: {
+          id: result.booking.id,
+          classId: result.booking.classId,
+          status: result.booking.status,
+        },
+        creditsRestored: result.creditsRestored,
       },
       {
-        status: 404,
+        status: 200,
+      },
+    );
+  } catch (error) {
+    if (error instanceof BookingError) {
+      return NextResponse.json(
+        {
+          error: error.message,
+        },
+        {
+          status: error.status,
+        },
+      );
+    }
+
+    console.error(
+      "Cancel booking error:",
+      error,
+    );
+
+    return NextResponse.json(
+      {
+        error: "Unable to cancel booking.",
+      },
+      {
+        status: 500,
       },
     );
   }
-
-  if (booking.userId !== user.id) {
-    return NextResponse.json(
-      {
-        error: 'Forbidden',
-      },
-      {
-        status: 403,
-      },
-    );
-  }
-
-  if (booking.status !== 'CONFIRMED') {
-    return NextResponse.json(
-      {
-        error: 'Booking is not active',
-      },
-      {
-        status: 409,
-      },
-    );
-  }
-
-  const updatedBooking = await prisma.booking.update({
-    where: {
-      id: booking.id,
-    },
-    data: {
-      status: 'CANCELLED',
-    },
-  });
-
-  return NextResponse.json(
-    {
-      booking: updatedBooking,
-    },
-    {
-      status: 200,
-    },
-  );
 }

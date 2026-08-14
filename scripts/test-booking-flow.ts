@@ -18,6 +18,7 @@ const prisma = new PrismaClient({
   adapter,
 });
 
+
 async function main() {
   console.log("Testing booking flow...");
 
@@ -311,3 +312,5 @@ main()
   .finally(async () => {
     await prisma.$disconnect();
   });
+
+  
