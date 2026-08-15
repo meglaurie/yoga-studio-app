@@ -15,27 +15,16 @@ export async function getClassesForDate(
       },
     },
     include: {
-    _count: {
+      bookings: {
+        where: {
+          status: 'CONFIRMED',
+        },
         select: {
-        bookings: {
-            where: {
-            status: 'CONFIRMED',
-            },
+          id: true,
+          attendeeCount: true,
+          userId: true,
         },
-        },
-    },
-
-    bookings: userId
-        ? {
-            where: {
-            userId,
-            status: 'CONFIRMED',
-            },
-            select: {
-            id: true,
-            },
-        }
-        : undefined,
+      },
     },
     orderBy: {
       startAt: 'asc',

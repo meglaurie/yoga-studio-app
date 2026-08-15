@@ -9,11 +9,10 @@ interface PrismaClass {
   startAt: Date;
   endAt: Date;
   capacity: number;
-  _count: {
-    bookings: number;
-  };
   bookings: {
     id: string;
+    attendeeCount: number;
+    userId: string;
   }[];
 }
 
@@ -25,8 +24,22 @@ function formatTime(date: Date): string {
 }
 
 export function mapClassToYogaClass(
-  yogaClass: PrismaClass
+  yogaClass: PrismaClass,
+  userId?: string,
 ): YogaClass {
+  const confirmedBookings = yogaClass.bookings;
+
+  const booked = confirmedBookings.reduce(
+    (total, booking) => total + booking.attendeeCount,
+    0,
+  );
+
+  const userBooking = userId
+    ? confirmedBookings.find(
+        (booking) => booking.userId === userId,
+      )
+    : undefined;
+
   return {
     id: yogaClass.id,
     date: formatDateForInput(yogaClass.startAt),
@@ -36,8 +49,8 @@ export function mapClassToYogaClass(
     instructor: yogaClass.instructorName,
     level: yogaClass.level,
     capacity: yogaClass.capacity,
-    booked: yogaClass._count.bookings,
-    isBooked: yogaClass.bookings.length > 0,
-    bookingId: yogaClass.bookings[0]?.id ?? null,
+    booked,
+    isBooked: Boolean(userBooking),
+    bookingId: userBooking?.id ?? null,
   };
 }

@@ -28,7 +28,9 @@ export default async function SchedulePage({
     user?.id,
   );
 
-  const scheduleClasses = classes.map(mapClassToYogaClass);
+  const scheduleClasses = classes.map((yogaClass) =>
+    mapClassToYogaClass(yogaClass, user?.id),
+  );
 
   return (
     <Section>

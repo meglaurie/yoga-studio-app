@@ -64,7 +64,11 @@ export default function ScheduleTable({
                 <td>{yogaClass.level}</td>
 
                 <td>
-                  {isFull ? 'Full' : `${spotsRemaining} spots`}
+                  {isFull
+                  ? 'Full'
+                  : `${spotsRemaining} ${
+                      spotsRemaining === 1 ? 'spot' : 'spots'
+                    } remaining`}
                 </td>
 
                 <td>
@@ -77,6 +81,7 @@ export default function ScheduleTable({
                       classId={yogaClass.id}
                       isBooked={yogaClass.isBooked}
                       bookingId={yogaClass.bookingId}
+                      spotsRemaining={spotsRemaining}
                     />
                   ) : (
                     <Link

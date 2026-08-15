@@ -9,15 +9,18 @@ interface BookingButtonProps {
   classId: string;
   isBooked: boolean;
   bookingId: string | null;
+  spotsRemaining: number;
 }
 
 export default function BookingButton({
   classId,
   isBooked,
   bookingId,
+  spotsRemaining,
 }: BookingButtonProps) {
   const router = useRouter();
 
+  const [attendeeCount, setAttendeeCount] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -33,7 +36,7 @@ export default function BookingButton({
         },
         body: JSON.stringify({
           classId,
-          attendeeCount: 1,
+          attendeeCount,
         }),
       });
 
@@ -84,25 +87,69 @@ export default function BookingButton({
     }
   }
 
+  if (isBooked) {
+    return (
+      <div>
+        <Button
+          variant="outline"
+          type="button"
+          onClick={handleCancel}
+          disabled={isLoading}
+        >
+          {isLoading ? 'Cancelling...' : 'Cancel'}
+        </Button>
+
+        {error && (
+          <p
+            role="alert"
+            className="schedule-table__booking-error"
+          >
+            {error}
+          </p>
+        )}
+      </div>
+    );
+  }
+
   return (
     <div>
+      <label>
+        <span className="sr-only">
+          Number of attendees
+        </span>
+
+        <select
+          value={attendeeCount}
+          onChange={(event) =>
+            setAttendeeCount(Number(event.target.value))
+          }
+          disabled={isLoading}
+        >
+          {Array.from(
+            { length: Math.min(spotsRemaining, 10) },
+            (_, index) => index + 1,
+          ).map((count) => (
+            <option key={count} value={count}>
+              {count} {count === 1 ? 'person' : 'people'}
+            </option>
+          ))}
+        </select>
+      </label>
+
       <Button
-        variant={isBooked ? 'outline' : 'primary'}
+        variant="primary"
         type="button"
-        onClick={isBooked ? handleCancel : handleBook}
+        onClick={handleBook}
         disabled={isLoading}
       >
-        {isLoading
-          ? isBooked
-            ? 'Cancelling...'
-            : 'Booking...'
-          : isBooked
-            ? 'Cancel'
-            : 'Book'}
+        {isLoading ? 'Booking...' : 'Book'}
       </Button>
 
       {error && (
-        <p role="alert" className="schedule-table__booking-error">
+        <p
+          role="alert"
+          className="schedule-table__booking-error"
+        >
           {error}
         </p>
       )}

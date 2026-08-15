@@ -159,10 +159,26 @@ export async function createBooking(
             ],
           });
 
-          const allocations = allocateCredits(
-            passes,
-            creditsRequired,
-          );
+          let allocations;
+
+          try {
+            allocations = allocateCredits(
+              passes,
+              creditsRequired,
+            );
+          } catch (error) {
+            if (
+              error instanceof Error &&
+              error.message === "Insufficient class-pass credits"
+            ) {
+              throw new BookingError(
+                "You need an active membership or enough class-pass credits to book this class.",
+                409,
+              );
+            }
+
+            throw error;
+          }
 
           for (const allocation of allocations) {
             const updatedPass =
