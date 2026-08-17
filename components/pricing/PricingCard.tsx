@@ -1,9 +1,11 @@
 import Card from "../ui/Card";
 import { Heading } from "../ui/Heading";
 import Text from "../ui/Text";
+import PurchaseButton from '@/components/pricing/PurchaseButton';
 import Button from "../ui/Button";
 
 interface PricingCardProps {
+  id?: string;
   name: string;
   description?: string | null;
   priceCents: number;
@@ -19,6 +21,7 @@ function formatPrice(priceCents: number, currency: string) {
 }
 
 export default function PricingCard({
+  id,
   name,
   description,
   priceCents,
@@ -43,9 +46,13 @@ export default function PricingCard({
         </p>
       )}
 
-      <Button type="button">
-        Get Started
-      </Button>
+    {id ? (
+        <PurchaseButton productId={id} />
+        ) : (
+        <Button type="button">
+            View Pricing
+        </Button>
+    )}
     </Card>
   );
 }
