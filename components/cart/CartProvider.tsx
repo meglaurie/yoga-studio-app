@@ -4,9 +4,8 @@ import {
   createContext,
   useCallback,
   useContext,
-  useEffect,
   useMemo,
-  useState,
+  useSyncExternalStore,
 } from "react";
 
 interface CartContextValue {
@@ -18,42 +17,123 @@ interface CartContextValue {
   isInCart: (productId: string) => boolean;
 }
 
-const CartContext = createContext<CartContextValue | undefined>(undefined);
+const CartContext = createContext<CartContextValue | undefined>(
+  undefined,
+);
 
 const STORAGE_KEY = "stillwater-cart";
+
+const EMPTY_CART: string[] = [];
+
+let cachedProductIds: string[] = [];
+let initialized = false;
+
+const listeners = new Set<() => void>();
+
+function notifyListeners() {
+  for (const listener of listeners) {
+    listener();
+  }
+}
+
+function readStoredCart(): string[] {
+  if (typeof window === "undefined") {
+    return [];
+  }
+
+  try {
+    const storedCart = window.localStorage.getItem(STORAGE_KEY);
+
+    if (!storedCart) {
+      return [];
+    }
+
+    const parsed: unknown = JSON.parse(storedCart);
+
+    if (!Array.isArray(parsed)) {
+      return [];
+    }
+
+    return parsed.filter(
+      (productId): productId is string =>
+        typeof productId === "string",
+    );
+  } catch {
+    window.localStorage.removeItem(STORAGE_KEY);
+    return [];
+  }
+}
+
+function getSnapshot() {
+  if (!initialized && typeof window !== "undefined") {
+    cachedProductIds = readStoredCart();
+    initialized = true;
+  }
+
+  return cachedProductIds;
+}
+
+function getServerSnapshot() {
+  return EMPTY_CART;
+}
+
+function subscribe(listener: () => void) {
+  listeners.add(listener);
+
+  return () => {
+    listeners.delete(listener);
+  };
+}
+
+function updateCart(productIds: string[]) {
+  cachedProductIds = productIds;
+  initialized = true;
+
+  if (typeof window !== "undefined") {
+    if (productIds.length === 0) {
+      window.localStorage.removeItem(STORAGE_KEY);
+    } else {
+      window.localStorage.setItem(
+        STORAGE_KEY,
+        JSON.stringify(productIds),
+      );
+    }
+  }
+
+  notifyListeners();
+}
 
 export function CartProvider({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const [productIds, setProductIds] = useState<string[]>([]);
-
-  useEffect(() => {
-  window.localStorage.setItem(
-    STORAGE_KEY,
-    JSON.stringify(productIds),
+  const productIds = useSyncExternalStore(
+    subscribe,
+    getSnapshot,
+    getServerSnapshot,
   );
-}, [productIds]);
 
   const addToCart = useCallback((productId: string) => {
-    setProductIds((current) => {
-      if (current.includes(productId)) {
-        return current;
-      }
+    const current = getSnapshot();
 
-      return [...current, productId];
-    });
+    if (current.includes(productId)) {
+      return;
+    }
+
+    updateCart([...current, productId]);
   }, []);
 
   const removeFromCart = useCallback((productId: string) => {
-    setProductIds((current) =>
+    const current = getSnapshot();
+
+    updateCart(
       current.filter((id) => id !== productId),
     );
   }, []);
 
   const clearCart = useCallback(() => {
-    setProductIds([]);
+    updateCart([]);
   }, []);
 
   const isInCart = useCallback(
