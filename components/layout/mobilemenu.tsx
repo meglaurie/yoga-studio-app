@@ -3,6 +3,8 @@
 import { useState } from "react";
 import Link from "next/link";
 import clsx from "clsx";
+import CartButton from "../cart/CartButton";
+import CartDrawer from "../cart/CartDrawer";
 
 interface NavItem {
   label: string;
@@ -17,7 +19,7 @@ export default function MobileMenu({
   navigation,
 }: MobileMenuProps) {
   const [isOpen, setIsOpen] = useState(false);
-
+   const [isCartOpen, setIsCartOpen] = useState(false);
   return (
     <div className="md:hidden">
       <button
@@ -47,6 +49,11 @@ export default function MobileMenu({
             </li>
           ))}
         </ul>
+        <CartButton onClick={() => setIsCartOpen(true)} />
+        <CartDrawer
+          isOpen={isCartOpen}
+          onClose={() => setIsCartOpen(false)}
+        />
       </div>
     </div>
   );

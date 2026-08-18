@@ -28,10 +28,10 @@ The finished application should demonstrate:
 - PostgreSQL ✅
 - Prisma ORM ✅
 - Auth.js ✅
-- Stripe payments
+- Stripe payments *
 - Protected routes ✅
 - CRUD APIs ✅
-- Dashboard architecture *
+- Dashboard architecture
 - Deployment
 
 The goal is a portfolio project that resembles a real SaaS application rather than a simple CRUD demo.

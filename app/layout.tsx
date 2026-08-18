@@ -4,6 +4,7 @@ import './globals.css';
 
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
+import { CartProvider } from "@/components/cart/CartProvider";
 
 const lato = Lato({
   subsets: ['latin'],
@@ -29,13 +30,15 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${lato.variable} ${artifika.variable}`}>
+     <body className={`${lato.variable} ${artifika.variable}`}>
+      <CartProvider>
         <Navbar />
 
         <main className="site-main">{children}</main>
 
         <Footer />
-      </body>
+      </CartProvider>
+    </body>
     </html>
   );
 }

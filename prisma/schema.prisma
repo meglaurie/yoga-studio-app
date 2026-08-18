@@ -123,8 +123,8 @@ model Purchase {
   currency    String         @default("CAD")
   status      PurchaseStatus @default(PENDING)
 
-  stripeCheckoutSessionId String? @unique
-  stripePaymentIntentId   String? @unique
+  stripeCheckoutSessionId String?
+  stripePaymentIntentId   String?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
