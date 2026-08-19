@@ -14,7 +14,12 @@ export default function Navbar() {
   const { data: session } = useSession();
 
   const isAuthenticated = Boolean(session?.user);
+  const dashboardHref =
+    session?.user?.role === "OWNER"
+      ? "/owner"
+      : "/dashboard";
   const [isCartOpen, setIsCartOpen] = useState(false);
+
   return (
     <nav className="navbar__container">
       <Logo
@@ -36,7 +41,7 @@ export default function Navbar() {
         {isAuthenticated && (
           <li className="navbar__item">
             <Link
-              href="/dashboard"
+              href={dashboardHref}
               className="navbar__link"
             >
               Dashboard
@@ -53,6 +58,7 @@ export default function Navbar() {
     <MobileMenu
       navigation={navigation}
       isAuthenticated={isAuthenticated}
+      dashboardHref={dashboardHref}
     />
     </nav>
   );

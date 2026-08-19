@@ -12,13 +12,16 @@ interface NavItem {
 interface MobileMenuProps {
   navigation: NavItem[];
   isAuthenticated: boolean;
+  dashboardHref: string;
 }
 
 export default function MobileMenu({
   navigation,
   isAuthenticated,
+  dashboardHref,
 }: MobileMenuProps) {
   const [isOpen, setIsOpen] = useState(false);
+  
   return (
     <div className="relative md:hidden">
       <button
@@ -51,8 +54,8 @@ export default function MobileMenu({
         {isAuthenticated && (
           <li>
             <Link
-              href="/dashboard"
-              onClick={() => setIsOpen(false)}
+              href={dashboardHref}
+              className="navbar__link"
             >
               Dashboard
             </Link>
