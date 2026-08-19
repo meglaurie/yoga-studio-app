@@ -66,3 +66,13 @@
 .navbar__link:hover {
   color: var(--color-accent);
 }
+
+@media (max-width: 767px) {
+  .navbar__container {
+    justify-content: space-between;
+  }
+
+  .navbar__menu {
+    display: none;
+  }
+}

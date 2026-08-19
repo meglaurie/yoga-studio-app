@@ -14,13 +14,6 @@ function formatDate(date: Date) {
   }).format(date);
 }
 
-function formatDateTime(date: Date) {
-  return new Intl.DateTimeFormat("en-CA", {
-    dateStyle: "medium",
-    timeStyle: "short",
-  }).format(date);
-}
-
 export default async function DashboardPage() {
   const user = await requireUser();
   const dashboard = await getMemberDashboardData(user.id);
@@ -56,7 +49,7 @@ export default async function DashboardPage() {
         {dashboard.classPasses.length === 0 ? (
           <div className="rounded-xl border border-gray-200 p-6">
             <p className="text-sm text-gray-600">
-              You don't have any class passes yet.
+              You don&apos;t have any class passes yet.
             </p>
 
             <Link
@@ -96,7 +89,7 @@ export default async function DashboardPage() {
         {dashboard.upcomingBookings.length === 0 ? (
           <div className="rounded-xl border border-gray-200 p-6">
             <p className="text-sm text-gray-600">
-              You don't have any upcoming bookings.
+              You don&apos;t have any upcoming bookings.
             </p>
 
             <Link
@@ -222,7 +215,7 @@ export default async function DashboardPage() {
         ) : (
           <div className="rounded-xl border border-gray-200 p-6">
             <p className="text-sm text-gray-600">
-              You don't currently have an active membership.
+              You don&apos;t currently have an active membership.
             </p>
 
             <Link

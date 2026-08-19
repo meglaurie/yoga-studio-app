@@ -3,8 +3,6 @@
 import { useState } from "react";
 import Link from "next/link";
 import clsx from "clsx";
-import CartButton from "../cart/CartButton";
-import CartDrawer from "../cart/CartDrawer";
 
 interface NavItem {
   label: string;
@@ -13,15 +11,16 @@ interface NavItem {
 
 interface MobileMenuProps {
   navigation: NavItem[];
+  isAuthenticated: boolean;
 }
 
 export default function MobileMenu({
   navigation,
+  isAuthenticated,
 }: MobileMenuProps) {
   const [isOpen, setIsOpen] = useState(false);
-   const [isCartOpen, setIsCartOpen] = useState(false);
   return (
-    <div className="md:hidden">
+    <div className="relative md:hidden">
       <button
         onClick={() => setIsOpen(!isOpen)}
         className="rounded p-2"
@@ -39,21 +38,28 @@ export default function MobileMenu({
       >
         <ul className="flex flex-col gap-4">
           {navigation.map((item) => (
-            <li key={item.href}>
-              <Link
-                href={item.href}
-                onClick={() => setIsOpen(false)}
-              >
-                {item.label}
-              </Link>
-            </li>
-          ))}
+          <li key={item.href}>
+            <Link
+              href={item.href}
+              onClick={() => setIsOpen(false)}
+            >
+              {item.label}
+            </Link>
+          </li>
+        ))}
+
+        {isAuthenticated && (
+          <li>
+            <Link
+              href="/dashboard"
+              onClick={() => setIsOpen(false)}
+            >
+              Dashboard
+            </Link>
+          </li>
+        )}
         </ul>
-        <CartButton onClick={() => setIsCartOpen(true)} />
-        <CartDrawer
-          isOpen={isCartOpen}
-          onClose={() => setIsCartOpen(false)}
-        />
+     
       </div>
     </div>
   );

@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Lato, Artifika } from 'next/font/google';
 import './globals.css';
 
+import AuthSessionProvider from "@/components/providers/SessionProvider";
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import { CartProvider } from "@/components/cart/CartProvider";
@@ -23,22 +24,25 @@ export const metadata: Metadata = {
   description: 'A modern yoga studio booking platform',
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
   return (
     <html lang="en">
-     <body className={`${lato.variable} ${artifika.variable}`}>
-      <CartProvider>
-        <Navbar />
+      <body className={`${lato.variable} ${artifika.variable}`}>
+       <AuthSessionProvider>
+        <CartProvider>
+          <Navbar/>
 
-        <main className="site-main">{children}</main>
+          <main className="site-main">{children}</main>
 
-        <Footer />
-      </CartProvider>
-    </body>
+          <Footer />
+        </CartProvider>
+      </AuthSessionProvider>
+      </body>
     </html>
   );
 }

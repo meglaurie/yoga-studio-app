@@ -40,7 +40,7 @@ export default function PurchaseHistory({
     return (
       <div className="rounded-xl border border-gray-200 p-6">
         <p className="text-sm text-gray-600">
-          You haven't made any purchases yet.
+          You haven&apos;t made any purchases yet.
         </p>
       </div>
     );
