@@ -2,6 +2,8 @@ import Link from "next/link";
 
 import { requireOwner } from "@/lib/authorization";
 import { prisma } from "@/lib/prisma";
+import CancelClassButton from "@/components/owner/CancelClassButton";
+import ClassStatusBadge from "@/components/owner/ClassStatusBadge";
 
 function formatDate(date: Date) {
   return new Intl.DateTimeFormat("en-CA", {
@@ -140,6 +142,10 @@ export default async function ManageClassesPage() {
                   </div>
 
                   <div className="flex shrink-0 gap-3">
+                  <ClassStatusBadge status={yogaClass.status} />
+                   {yogaClass.status !== "CANCELLED" && (
+                      <CancelClassButton classId={yogaClass.id} className={yogaClass.name} />
+                   )}
                     <Link
                       href={`/owner/classes/${yogaClass.id}/edit`}
                       className="rounded-lg border border-gray-300 px-4 py-2 text-sm font-medium transition hover:bg-gray-50"

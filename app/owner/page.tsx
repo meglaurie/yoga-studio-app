@@ -2,6 +2,7 @@ import Link from "next/link";
 
 import { requireOwner } from "@/lib/authorization";
 import { prisma } from "@/lib/prisma";
+import ClassStatusBadge from "@/components/owner/ClassStatusBadge";
 
 function formatDate(date: Date) {
   return new Intl.DateTimeFormat("en-CA", {
@@ -151,6 +152,7 @@ export default async function OwnerClassesPage() {
                       )}{" "}
                       spots remaining
                     </p>
+                    <ClassStatusBadge status={yogaClass.status}/>
                   </div>
                 </article>
               ))}

@@ -43,6 +43,15 @@ enum PurchaseStatus {
   REFUNDED
 }
 
+enum ClassStatus {
+  SCHEDULED
+  CANCELLED
+}
+
+enum NotificationType {
+  CLASS_CANCELLED
+}
+
 model User {
   id           String   @id @default(cuid())
   name         String
@@ -52,11 +61,12 @@ model User {
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
 
-  bookings    Booking[]
-  purchases   Purchase[]
-  classPasses ClassPass[]
-  memberships Membership[]
-  classes     Class[]      @relation("ClassCreator")
+  bookings      Booking[]
+  purchases     Purchase[]
+  classPasses   ClassPass[]
+  memberships   Membership[]
+  classes       Class[]        @relation("ClassCreator")
+  notifications Notification[]
 }
 
 model Class {
@@ -70,7 +80,8 @@ model Class {
   capacity       Int
 
   createdById String
-  createdBy   User   @relation("ClassCreator", fields: [createdById], references: [id])
+  createdBy   User        @relation("ClassCreator", fields: [createdById], references: [id])
+  status      ClassStatus @default(SCHEDULED)
 
   bookings Booking[]
 
@@ -79,6 +90,7 @@ model Class {
 
   @@index([startAt])
   @@index([createdById])
+  @@index([status])
 }
 
 model Booking {
@@ -186,4 +198,19 @@ model BookingCreditUsage {
   @@unique([bookingId, classPassId])
   @@index([bookingId])
   @@index([classPassId])
+}
+
+model Notification {
+  id        String           @id @default(cuid())
+  userId    String
+  type      NotificationType
+  message   String
+  classId   String?
+  read      Boolean          @default(false)
+  createdAt DateTime         @default(now())
+
+  user User @relation(fields: [userId], references: [id])
+
+  @@index([userId])
+  @@index([userId, read])
 }

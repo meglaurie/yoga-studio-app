@@ -16,7 +16,7 @@ export class BookingError extends Error {
   }
 }
 
-function isTransactionConflict(error: unknown) {
+export function isTransactionConflict(error: unknown) {
   if (
     error instanceof Prisma.PrismaClientKnownRequestError &&
     error.code === "P2034"
