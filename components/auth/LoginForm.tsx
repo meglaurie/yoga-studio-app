@@ -54,11 +54,12 @@ const router = useRouter();
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} noValidate>
+    <form className="login-form" onSubmit={handleSubmit(onSubmit)} noValidate>
       <div>
-        <label htmlFor="email">Email</label>
+        <label className="form-label" htmlFor="email">Email</label>
 
         <input
+          className="form-input"
           id="email"
           type="email"
           autoComplete="email"
@@ -71,9 +72,10 @@ const router = useRouter();
       </div>
 
       <div>
-        <label htmlFor="password">Password</label>
+        <label className="form-label" htmlFor="password">Password</label>
 
         <input
+          className="form-input"
           id="password"
           type="password"
           autoComplete="current-password"

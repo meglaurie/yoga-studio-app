@@ -29,3 +29,16 @@ img {
 .site-main {
   min-height: 100vh;
 }
+
+input {
+  height: 2rem;
+  border-radius: var(--radius-sm);
+  /* border-color: var(--color-secondary); */
+  /* border-color: var(--color-black); */
+  border: 2px solid var(--color-primary); 
+  margin: 1rem 0 .5rem 0;
+}
+
+form {
+  display: block;
+}

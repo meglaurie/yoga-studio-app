@@ -1,3 +1,6 @@
 .section {
   background-color: var(--color-primary);
+  display: flex;
+  flex-direction: column;
+  /* min-height: 80vh; */
 }

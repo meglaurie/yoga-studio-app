@@ -1,9 +1,21 @@
 .container {
   width: 100%;
 
+  /* keep container able to expand to fill its parent; parent (.section) sets the viewport height */
+  min-height: 100%;
+  height: 100%;
+
+  background-color: inherit;
+
   max-width: var(--container-width);
 
   margin-inline: auto;
 
   padding-inline: 1.5rem;
+
+  padding-top: 3rem;
+
+  text-align: center;
+
+  flex-grow: 1;
 }

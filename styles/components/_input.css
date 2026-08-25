@@ -1,0 +1,26 @@
+.form-label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  text-align: left;
+}
+
+.form-input {
+  display: block;
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  margin-bottom: 1rem;
+  border: 1px solid rgba(0,0,0,0.12);
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+/* specific small helper to scope label/input rules to login form */
+.login-form .form-label,
+.login-form .form-input {
+  display: block;
+}
+
+.login-form {
+  text-align: left; /* ensure labels/inputs align left inside centered containers */
+}
