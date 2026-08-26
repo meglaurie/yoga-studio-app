@@ -2,6 +2,7 @@ import Link from "next/link";
 
 import { requireOwner } from "@/lib/authorization";
 import { prisma } from "@/lib/prisma";
+import ToggleProductActiveButton from "@/components/owner/ToggleProductActiveButton";
 
 function formatProductType(type: string) {
   return type
@@ -135,14 +136,18 @@ export default async function ManageProductsPage() {
                     </div>
                   </div>
 
-                  <div className="flex shrink-0 gap-3">
-                    <Link
-                      href={`/owner/products/${product.id}/edit`}
-                      className="rounded-lg border border-gray-300 px-4 py-2 text-sm font-medium transition hover:bg-gray-50"
-                    >
-                      Edit
-                    </Link>
-                  </div>
+                 <div className="flex shrink-0 gap-3">
+                  <Link
+                    href={`/owner/products/${product.id}/edit`}
+                    className="rounded-lg border border-gray-300 px-4 py-2 text-sm font-medium transition hover:bg-gray-50"
+                  >
+                    Edit
+                  </Link>
+                  <ToggleProductActiveButton
+                    productId={product.id}
+                    active={product.active}
+                  />
+                </div>
                 </article>
               ))}
             </div>
