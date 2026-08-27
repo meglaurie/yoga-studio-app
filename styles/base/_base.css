@@ -28,6 +28,9 @@ img {
 
 .site-main {
   min-height: 100vh;
+  /* create a stacking context so page-specific backgrounds can sit behind content */
+  position: relative;
+  z-index: 1;
 }
 
 input {

@@ -1,0 +1,33 @@
+.auth-background {
+  /* positioned relative to the main.site-main stacking context so it covers the
+     main content area but does not extend into the footer (footer is outside main) */
+  position: absolute;
+  inset: 0; /* top:0; right:0; bottom:0; left:0; — fills the main area */
+
+  background-image: url('/imgs/Background.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
+
+  /* make the image solid (no transparency) and non-interactive */
+  opacity: 1;
+  pointer-events: none;
+
+  /* sit behind content within the .site-main stacking context */
+  z-index: -1;
+  filter: none;
+}
+
+/* Slightly adjust on small screens so it doesn't overwhelm the layout */
+@media (max-width: 900px) {
+  .auth-background {
+    background-position: right center;
+    background-size: cover;
+  }
+}
+
+@media (max-width: 480px) {
+  .auth-background {
+    display: none; /* hide on very small screens to preserve space */
+  }
+}

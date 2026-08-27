@@ -1,12 +1,14 @@
 .schedule-table__wrapper {
   width: 100%;
   overflow-x: auto;
+  margin-top: var(--space-4);
 }
 
 .schedule-table {
   width: 100%;
   border-collapse: collapse;
   background: var(--color-surface);
+  border-radius: var(--radius-md);
 }
 
 .schedule-table th,

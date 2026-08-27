@@ -7,6 +7,7 @@ import { getClassesForDate } from '@/lib/schedule';
 import { getCurrentUser } from '@/lib/auth-server';
 import { formatDateForInput } from '@/lib/date';
 import { mapClassToYogaClass } from '@/lib/mappers/class';
+import Container from '@/components/layout/Container';
 
 interface SchedulePageProps {
   searchParams: Promise<{
@@ -34,19 +35,21 @@ export default async function SchedulePage({
 
   return (
     <Section>
-      <Heading as="h1" size="display">
-        Class Schedule
-      </Heading>
+      <Container>
+        <Heading as="h1" size="display">
+          Class Schedule
+        </Heading>
 
-      <Text>
-        Find a class that fits your schedule and your practice.
-      </Text>
+        <Text>
+          Find a class that fits your schedule and your practice.
+        </Text>
 
-     <Schedule
-        selectedDate={selectedDate}
-        classes={scheduleClasses}
-        isAuthenticated={Boolean(user)}
-    />
+      <Schedule
+          selectedDate={selectedDate}
+          classes={scheduleClasses}
+          isAuthenticated={Boolean(user)}
+      />
+    </Container>
     </Section>
   );
 }
