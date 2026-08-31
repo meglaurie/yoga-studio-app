@@ -21,6 +21,10 @@ export default function MobileMenu({
   dashboardHref,
 }: MobileMenuProps) {
   const [isOpen, setIsOpen] = useState(false);
+  // Hide Login/Create Account when authenticated
+  const filteredNavigation = navigation.filter(
+    (item) => !(isAuthenticated && (item.label === "Login" || item.label === "Create Account"))
+  );
   
   return (
     <div className="relative md:hidden">
@@ -40,7 +44,7 @@ export default function MobileMenu({
         )}
       >
         <ul className="flex flex-col gap-4">
-          {navigation.map((item) => (
+          {filteredNavigation.map((item) => (
           <li key={item.href}>
             <Link
               href={item.href}
@@ -52,14 +56,29 @@ export default function MobileMenu({
         ))}
 
         {isAuthenticated && (
-          <li>
-            <Link
-              href={dashboardHref}
-              className="navbar__link"
-            >
-              Dashboard
-            </Link>
-          </li>
+          <>
+            <li>
+              <Link
+                href={dashboardHref}
+                className="navbar__link"
+                onClick={() => setIsOpen(false)}
+              >
+                Dashboard
+              </Link>
+            </li>
+
+            <li>
+              <button
+                onClick={() => {
+                  import("next-auth/react").then(({ signOut }) => signOut({ callbackUrl: "/login" }));
+                }}
+                className="navbar__link"
+                style={{ background: "none", border: "none", padding: 0, cursor: "pointer" }}
+              >
+                Logout
+              </button>
+            </li>
+          </>
         )}
         </ul>
      

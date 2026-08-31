@@ -21,6 +21,11 @@ export default function Navbar() {
       : "/dashboard";
   const [isCartOpen, setIsCartOpen] = useState(false);
 
+  // Hide public auth links when the user is authenticated
+  const filteredNavigation = navigation.filter(
+    (item) => !(isAuthenticated && (item.label === "Login" || item.label === "Create Account"))
+  );
+
   return (
     <nav className="navbar__container">
       <Logo
@@ -31,7 +36,7 @@ export default function Navbar() {
       />
       {/* Desktop */}
       <ul className="navbar__menu">
-        {navigation.map((item) => (
+        {filteredNavigation.map((item) => (
           <li key={item.href} className="navbar__item">
             <Link href={item.href} className="navbar__link">
               {item.label}
@@ -40,14 +45,29 @@ export default function Navbar() {
         ))}
 
         {isAuthenticated && (
-          <li className="navbar__item">
-            <Link
-              href={dashboardHref}
-              className="navbar__link"
-            >
-              Dashboard
-            </Link>
-          </li>
+          <>
+            <li className="navbar__item">
+              <Link
+                href={dashboardHref}
+                className="navbar__link"
+              >
+                Dashboard
+              </Link>
+            </li>
+
+            <li className="navbar__item">
+              <button
+                onClick={() => {
+                  // dynamic import to avoid moving next-auth to a non-client boundary
+                  import("next-auth/react").then(({ signOut }) => signOut({ callbackUrl: "/login" }));
+                }}
+                className="navbar__link"
+                style={{ background: "none", border: "none", padding: 0, cursor: "pointer" }}
+              >
+                Logout
+              </button>
+            </li>
+          </>
         )}
       </ul>
       {isMember && <NotificationBell />}
