@@ -8,12 +8,13 @@ import Link from "next/link";
 import MobileMenu from "./MobileMenu";
 import Logo from "@/components/ui/Logo";
 import { navigation } from "@/components/data/navigation";
-
+import NotificationBell from "@/components/notifications/NotificationBell";
 
 export default function Navbar() {
   const { data: session } = useSession();
 
   const isAuthenticated = Boolean(session?.user);
+  const isMember = session?.user?.role === "MEMBER";
   const dashboardHref =
     session?.user?.role === "OWNER"
       ? "/owner"
@@ -49,6 +50,7 @@ export default function Navbar() {
           </li>
         )}
       </ul>
+      {isMember && <NotificationBell />}
       <CartButton onClick={() => setIsCartOpen(true)} />
       <CartDrawer
         isOpen={isCartOpen}

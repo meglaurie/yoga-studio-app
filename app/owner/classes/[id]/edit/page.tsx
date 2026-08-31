@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 
 import { requireOwner } from "@/lib/authorization";
 import { prisma } from "@/lib/prisma";
@@ -19,13 +19,15 @@ export default async function EditClassPage({
   const { id } = await params;
 
   const yogaClass = await prisma.class.findUnique({
-    where: {
-      id,
-    },
+    where: { id },
   });
 
   if (!yogaClass) {
     notFound();
+  }
+
+  if (yogaClass.status === "CANCELLED") {
+    redirect("/owner/classes");
   }
 
   return (
