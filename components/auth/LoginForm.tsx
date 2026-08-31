@@ -46,7 +46,13 @@ const router = useRouter();
     });
 
     if (!result || result.error) {
-      setServerError('Invalid email or password.');
+      console.log('NextAuth signIn error:', result?.error);
+
+      if (result?.error && result.error !== 'CredentialsSignin') {
+        setServerError(result.error);
+      } else {
+        setServerError('Invalid email or password.');
+      }
       return;
     }
 

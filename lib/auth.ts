@@ -46,6 +46,10 @@ export const authOptions: NextAuthOptions = {
         return null;
         }
 
+        if (user.status === 'DEACTIVATED') {
+          throw new Error('This account has been deactivated. Please contact the studio.');
+        }
+
         return {
         id: user.id,
         name: user.name,
