@@ -1,168 +1,160 @@
+// app/owner/page.tsx
 import Link from "next/link";
 
 import { requireOwner } from "@/lib/authorization";
 import { prisma } from "@/lib/prisma";
-import ClassStatusBadge from "@/components/owner/ClassStatusBadge";
-import Container from "@/components/layout/Container";
+
+function formatPrice(cents: number, currency: string) {
+  return new Intl.NumberFormat("en-CA", {
+    style: "currency",
+    currency,
+  }).format(cents / 100);
+}
 
 function formatDate(date: Date) {
-  return new Intl.DateTimeFormat("en-CA", {
-    dateStyle: "medium",
-  }).format(date);
+  return new Intl.DateTimeFormat("en-CA", { dateStyle: "medium" }).format(
+    date,
+  );
 }
 
-function formatTime(date: Date) {
-  return new Intl.DateTimeFormat("en-CA", {
-    hour: "numeric",
-    minute: "2-digit",
-  }).format(date);
-}
-
-const levelLabels = {
-  BEGINNER: "Beginner",
-  ALL_LEVELS: "All levels",
-  INTERMEDIATE: "Intermediate",
-  ADVANCED: "Advanced",
-} as const;
-
-export default async function OwnerClassesPage() {
+export default async function OwnerOverviewPage() {
   await requireOwner();
 
-  const classes = await prisma.class.findMany({
-    where: {
-      startAt: {
-        gte: new Date(),
+  const now = new Date();
+  const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
+
+  const [
+    upcomingClassesCount,
+    activeMembersCount,
+    activeMembershipsCount,
+    recentPurchases,
+    monthlyRevenueResult,
+  ] = await Promise.all([
+    prisma.class.count({
+      where: {
+        status: "SCHEDULED",
+        startAt: { gte: now },
       },
-    },
-    orderBy: {
-      startAt: "asc",
-    },
-    include: {
-      _count: {
-        select: {
-          bookings: {
-            where: {
-              status: "CONFIRMED",
-            },
-          },
-        },
+    }),
+    prisma.user.count({
+      where: {
+        role: "MEMBER",
+        status: "ACTIVE",
       },
+    }),
+    prisma.membership.count({
+      where: {
+        startsAt: { lte: now },
+        expiresAt: { gt: now },
+        purchase: { status: "PAID" },
+      },
+    }),
+    prisma.purchase.findMany({
+      where: { status: "PAID" },
+      orderBy: { createdAt: "desc" },
+      take: 10,
+      include: {
+        user: { select: { name: true } },
+        product: { select: { name: true } },
+      },
+    }),
+    prisma.purchase.aggregate({
+      where: {
+        status: "PAID",
+        createdAt: { gte: startOfMonth },
+      },
+      _sum: { amountCents: true },
+    }),
+  ]);
+
+  const monthlyRevenueCents = monthlyRevenueResult._sum.amountCents ?? 0;
+
+  const stats = [
+    {
+      label: "Upcoming classes",
+      value: upcomingClassesCount,
+      href: "/owner/classes",
     },
-  });
+    {
+      label: "Active members",
+      value: activeMembersCount,
+      href: "/owner/users",
+    },
+    {
+      label: "Active memberships",
+      value: activeMembershipsCount,
+      href: "/owner/users",
+    },
+    {
+      label: "Revenue this month",
+      value: formatPrice(monthlyRevenueCents, "CAD"),
+      href: null,
+    },
+  ];
 
   return (
-    <main className="mx-auto max-w-6xl px-6 py-12">
-      <Container>
-        <header className="flex flex-col gap-6 border-b border-gray-200 pb-10 sm:flex-row sm:items-end sm:justify-between">
-          <div>
-            <Link
-              href="/owner"
-              className="text-sm font-medium text-gray-500 hover:text-gray-900"
-            >
-              ← Owner dashboard
-            </Link>
+    <main>
+      <header className="border-b border-gray-200 pb-8">
+        <p className="text-sm font-medium uppercase tracking-[0.2em] text-gray-500">
+          Owner dashboard
+        </p>
+        <h1 className="mt-3 text-4xl font-semibold tracking-tight">
+          Overview
+        </h1>
+        <p className="mt-3 text-gray-600">
+          A snapshot of the studio right now.
+        </p>
+      </header>
 
-            <p className="mt-8 text-sm font-medium uppercase tracking-[0.2em] text-gray-500">
-              Class management
-            </p>
-
-            <h1 className="mt-3 text-4xl font-semibold tracking-tight">
-              Classes
-            </h1>
-
-            <p className="mt-3 text-gray-600">
-              Manage upcoming classes on the studio schedule.
-            </p>
-          </div>
-
-          <Link
-            href="/owner/classes/new"
-            className="inline-flex items-center justify-center rounded-lg bg-gray-900 px-5 py-3 text-sm font-medium text-white transition hover:bg-gray-800"
-          >
-            Schedule a class
-          </Link>
-          <div className="mt-6">
-              <Link
-                  href="/owner/classes"
-                  className="inline-flex rounded-lg bg-gray-900 px-5 py-3 text-sm font-medium text-white transition hover:bg-gray-800"
-              >
-                  Manage classes
-              </Link>
-          </div>
-        </header>
-
-        <section className="mt-10">
-          {classes.length === 0 ? (
-            <div className="rounded-xl border border-gray-200 bg-white p-8 text-center shadow-sm">
-              <h2 className="text-lg font-semibold">
-                No upcoming classes
-              </h2>
-
-              <p className="mt-2 text-sm text-gray-600">
-                Schedule your first class to make it available to
-                members.
+      <section className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        {stats.map((stat) => {
+          const content = (
+            <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
+              <p className="text-sm text-gray-500">{stat.label}</p>
+              <p className="mt-2 text-3xl font-semibold tracking-tight">
+                {stat.value}
               </p>
-
-              <Link
-                href="/owner/classes/new"
-                className="mt-5 inline-flex rounded-lg bg-gray-900 px-5 py-3 text-sm font-medium text-white hover:bg-gray-800"
-              >
-                Schedule a class
-              </Link>
             </div>
+          );
+
+          return stat.href ? (
+            <Link key={stat.label} href={stat.href} className="block transition hover:opacity-80">
+              {content}
+            </Link>
           ) : (
-            <div className="overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm">
-              <div className="divide-y divide-gray-100">
-                {classes.map((yogaClass) => (
-                  <article
-                    key={yogaClass.id}
-                    className="flex flex-col gap-5 p-6 sm:flex-row sm:items-center sm:justify-between"
-                  >
-                    <div>
-                      <h2 className="text-lg font-semibold">
-                        {yogaClass.name}
-                      </h2>
+            <div key={stat.label}>{content}</div>
+          );
+        })}
+      </section>
 
-                      <p className="mt-1 text-sm text-gray-600">
-                        {formatDate(yogaClass.startAt)}
-                        {" · "}
-                        {formatTime(yogaClass.startAt)}
-                        {" – "}
-                        {formatTime(yogaClass.endAt)}
-                      </p>
-
-                      <p className="mt-2 text-sm text-gray-500">
-                        {yogaClass.instructorName}
-                        {" · "}
-                        {levelLabels[yogaClass.level]}
-                      </p>
-                    </div>
-
-                    <div className="text-sm text-gray-600 sm:text-right">
-                      <p>
-                        <span className="font-semibold text-gray-900">
-                          {yogaClass._count.bookings}
-                        </span>{" "}
-                        / {yogaClass.capacity} booked
-                      </p>
-
-                      <p className="mt-1">
-                        {Math.max(
-                          yogaClass.capacity -
-                            yogaClass._count.bookings,
-                          0,
-                        )}{" "}
-                        spots remaining
-                      </p>
-                      <ClassStatusBadge status={yogaClass.status}/>
-                    </div>
-                  </article>
-                ))}
-              </div>
+      <section className="mt-10">
+        <h2 className="text-xl font-semibold tracking-tight">
+          Recent purchases
+        </h2>
+        <div className="mt-4 overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm">
+          {recentPurchases.length === 0 ? (
+            <p className="p-6 text-sm text-gray-500">No purchases yet.</p>
+          ) : (
+            <div className="divide-y divide-gray-100">
+              {recentPurchases.map((purchase) => (
+                <div
+                  key={purchase.id}
+                  className="flex flex-col gap-1 p-4 text-sm sm:flex-row sm:items-center sm:justify-between"
+                >
+                  <div>
+                    <p className="font-medium">{purchase.user.name}</p>
+                    <p className="text-gray-500">{purchase.product.name}</p>
+                  </div>
+                  <div className="text-gray-500 sm:text-right">
+                    <p>{formatPrice(purchase.amountCents, purchase.currency)}</p>
+                    <p>{formatDate(purchase.createdAt)}</p>
+                  </div>
+                </div>
+              ))}
             </div>
           )}
-        </section>
-      </Container>
+        </div>
+      </section>
     </main>
   );
 }
