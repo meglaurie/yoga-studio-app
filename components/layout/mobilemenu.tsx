@@ -1,5 +1,6 @@
 "use client";
 
+import { signOut, useSession } from "next-auth/react";
 import { useState } from "react";
 import Link from "next/link";
 import clsx from "clsx";
@@ -68,15 +69,13 @@ export default function MobileMenu({
             </li>
 
             <li>
-              <button
-                onClick={() => {
-                  import("next-auth/react").then(({ signOut }) => signOut({ callbackUrl: "/login" }));
-                }}
+             <button
+                onClick={() => signOut({ callbackUrl: "/login" })}
                 className="navbar__link"
                 style={{ background: "none", border: "none", padding: 0, cursor: "pointer" }}
               >
-                Logout
-              </button>
+              Logout
+            </button>
             </li>
           </>
         )}

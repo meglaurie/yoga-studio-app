@@ -62,6 +62,7 @@ export default function PricingPreview() {
           ))}
         </Grid>
       </div>
+      <hr className="feature-split__divider" />
     </Section>
   );
 }

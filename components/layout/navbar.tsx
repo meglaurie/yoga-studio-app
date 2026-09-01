@@ -1,6 +1,7 @@
 "use client";
 
-import { useSession } from "next-auth/react";
+
+import { signOut, useSession } from "next-auth/react";
 import { useState } from "react";
 import CartButton from "@/components/cart/CartButton";
 import CartDrawer from "@/components/cart/CartDrawer";
@@ -57,14 +58,11 @@ export default function Navbar() {
 
             <li className="navbar__item">
               <button
-                onClick={() => {
-                  // dynamic import to avoid moving next-auth to a non-client boundary
-                  import("next-auth/react").then(({ signOut }) => signOut({ callbackUrl: "/login" }));
-                }}
-                className="navbar__link"
-                style={{ background: "none", border: "none", padding: 0, cursor: "pointer" }}
-              >
-                Logout
+                  onClick={() => signOut({ callbackUrl: "/login" })}
+                  className="navbar__link"
+                  style={{ background: "none", border: "none", padding: 0, cursor: "pointer" }}
+                >
+                  Logout
               </button>
             </li>
           </>
