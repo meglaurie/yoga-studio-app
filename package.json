@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "db:migrate": "prisma migrate dev && prisma generate"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.7.1",

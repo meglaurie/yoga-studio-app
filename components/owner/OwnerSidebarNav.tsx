@@ -8,6 +8,7 @@ const navItems = [
   { href: "/owner/classes", label: "Classes" },
   { href: "/owner/products", label: "Products" },
   { href: "/owner/users", label: "Members" },
+  { href: "/owner/messages", label: "Messages" },
 ];
 
 export default function OwnerSidebarNav() {
