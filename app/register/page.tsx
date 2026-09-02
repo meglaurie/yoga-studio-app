@@ -4,7 +4,6 @@ import Text from '@/components/ui/Text';
 
 import RegisterForm from '@/components/auth/RegisterForm';
 import Background from '@/components/ui/Background';
-import Footer from '@/components/layout/Footer';
 import Card from '@/components/ui/Card';
 
 export default function RegisterPage() {
@@ -22,7 +21,6 @@ export default function RegisterPage() {
           <RegisterForm />
         </Card>
       </Container>
-      <Footer/>
     </>
   );
 }

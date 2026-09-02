@@ -15,8 +15,8 @@ export default function ContactPage() {
         <div>
           <h2 className="text-lg font-semibold">Studio info</h2>
           <div className="mt-4 space-y-3 text-sm text-gray-600">
-            <p>123 Placeholder Street, Calgary, AB</p>
-            <p>(403) 555-0100</p>
+            <p>123 Serenity Lane Calgary, AB T2X 1Y5</p>
+            <p>(403) 555-1234</p>
             <p>hello@stillwateryoga.com</p>
             <p>
               Mon–Fri: 6am–8pm

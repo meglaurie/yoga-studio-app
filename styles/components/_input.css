@@ -24,3 +24,12 @@
 .login-form {
   text-align: left; /* ensure labels/inputs align left inside centered containers */
 }
+
+.register-form .form-label,
+.register-form .form-input {
+  display: block;
+}
+
+.register-form {
+  text-align: left;
+}

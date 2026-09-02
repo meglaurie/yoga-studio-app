@@ -8,6 +8,7 @@ import { getCurrentUser } from '@/lib/auth-server';
 import { formatDateForInput } from '@/lib/date';
 import { mapClassToYogaClass } from '@/lib/mappers/class';
 import Container from '@/components/layout/Container';
+import Background from '@/components/ui/Background';
 
 interface SchedulePageProps {
   searchParams: Promise<{
@@ -34,7 +35,8 @@ export default async function SchedulePage({
   );
 
   return (
-    <Section>
+    <>
+    <Background/>
       <Container>
         <Heading as="h1" size="display">
           Class Schedule
@@ -50,6 +52,6 @@ export default async function SchedulePage({
           isAuthenticated={Boolean(user)}
       />
     </Container>
-    </Section>
+    </>
   );
 }

@@ -1,13 +1,15 @@
 .calendar {
   width: 100%;
   font-family: var(--font-body);
+  background: var(--color-tertiary);
+  border-radius: var(--radius-md);
 }
 
 /* Header */
 .calendar__header {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: space-around;
   gap: var(--space-3);
   margin-bottom: var(--space-3);
 }

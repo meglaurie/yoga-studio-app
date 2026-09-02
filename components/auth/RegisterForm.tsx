@@ -87,11 +87,12 @@ export default function RegisterForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} noValidate>
+    <form className="register-form" onSubmit={handleSubmit(onSubmit)} noValidate>
       <div>
-        <label htmlFor="name">Name</label>
+        <label className="form-label" htmlFor="name">Name</label>
 
         <input
+          className="form-input"
           id="name"
           type="text"
           autoComplete="name"
@@ -104,9 +105,12 @@ export default function RegisterForm() {
       </div>
 
       <div>
-        <label htmlFor="email">Email</label>
+        <label className="form-label" htmlFor="email">
+          Email
+        </label>
 
         <input
+          className="form-input"
           id="email"
           type="email"
           autoComplete="email"
@@ -119,9 +123,12 @@ export default function RegisterForm() {
       </div>
 
       <div>
-        <label htmlFor="password">Password</label>
+        <label className="form-label" htmlFor="password">
+          Password
+        </label>
 
         <input
+          className="form-input"
           id="password"
           type="password"
           autoComplete="new-password"
@@ -134,11 +141,12 @@ export default function RegisterForm() {
       </div>
 
       <div>
-        <label htmlFor="confirmPassword">
+        <label className="form-label" htmlFor="confirmPassword">
           Confirm Password
         </label>
 
         <input
+          className="form-input"
           id="confirmPassword"
           type="password"
           autoComplete="new-password"
