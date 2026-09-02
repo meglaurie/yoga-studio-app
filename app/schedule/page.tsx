@@ -1,4 +1,3 @@
-import Section from '@/components/ui/Section';
 import { Heading } from '@/components/ui/Heading';
 import Text from '@/components/ui/Text';
 
@@ -25,10 +24,7 @@ export default async function SchedulePage({
 
   const user = await getCurrentUser();
 
-  const classes = await getClassesForDate(
-    selectedDate,
-    user?.id,
-  );
+  const classes = await getClassesForDate(selectedDate);
 
   const scheduleClasses = classes.map((yogaClass) =>
     mapClassToYogaClass(yogaClass, user?.id),

@@ -2,6 +2,7 @@ import clsx from 'clsx';
 import Button from '../ui/Button';
 import { Heading } from '../ui/Heading';
 import Text from '../ui/Text';
+import Image from 'next/image';
 
 interface FeatureSplitProps {
   image: string;
@@ -20,6 +21,7 @@ export default function FeatureSplit({
   buttonText,
   reverse = false,
 }: FeatureSplitProps) {
+  const safeSrc = image.includes(' ') ? encodeURI(image) : image;
   return (
     <>
       <section
@@ -28,7 +30,7 @@ export default function FeatureSplit({
       })}
       >
       <div className="feature-split__image">
-        <img src={image} alt={imageAlt} />
+        <Image src={safeSrc} width={500} height={300} alt={imageAlt} />
       </div>
 
       <div className="feature-split__content">

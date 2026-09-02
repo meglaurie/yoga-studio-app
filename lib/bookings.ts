@@ -1,7 +1,6 @@
 import { Prisma } from "@/lib/generated/prisma/client";
 import { prisma } from "@/lib/prisma";
 import { calculateCreditsRequired } from "@/lib/booking-credits";
-import { getUsableClassPasses } from "@/lib/class-passes";
 import { allocateCredits } from "@/lib/credit-allocation";
 
 const MAX_TRANSACTION_RETRIES = 3;

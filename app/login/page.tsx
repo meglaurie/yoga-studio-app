@@ -5,7 +5,6 @@ import Card from '@/components/ui/Card';
 
 import LoginForm from '@/components/auth/LoginForm';
 import Background from '@/components/ui/Background';
-import Footer from '@/components/layout/Footer';
 
 export default function LoginPage() {
   return (

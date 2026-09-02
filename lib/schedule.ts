@@ -2,7 +2,6 @@ import { prisma } from '@/lib/prisma';
 
 export async function getClassesForDate(
   date: string,
-  userId?: string,
 ) {
   const startOfDay = new Date(`${date}T00:00:00`);
   const endOfDay = new Date(`${date}T23:59:59.999`);
